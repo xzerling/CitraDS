@@ -13020,11 +13020,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Zerling\\Documents\\UTAL\\2020-1\\Citra\\New\\CitraDataStore\\CitraDataStore.csproj",
+      "projectUniqueName": "C:\\Users\\Zerling\\Documents\\UTAL\\2020-1\\Citra\\New\\Git\\CitraDS\\CitraDataStore.csproj",
       "projectName": "CitraDataStore",
-      "projectPath": "C:\\Users\\Zerling\\Documents\\UTAL\\2020-1\\Citra\\New\\CitraDataStore\\CitraDataStore.csproj",
+      "projectPath": "C:\\Users\\Zerling\\Documents\\UTAL\\2020-1\\Citra\\New\\Git\\CitraDS\\CitraDataStore.csproj",
       "packagesPath": "C:\\Users\\Zerling\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Zerling\\Documents\\UTAL\\2020-1\\Citra\\New\\CitraDataStore\\obj\\",
+      "outputPath": "C:\\Users\\Zerling\\Documents\\UTAL\\2020-1\\Citra\\New\\Git\\CitraDS\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

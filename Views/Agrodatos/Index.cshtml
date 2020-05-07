@@ -1,0 +1,533 @@
+﻿@model IEnumerable<CitraDataStore.Models.Agrodatos>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewBag.Title = "Agrodatos";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Pagina de Inicio
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <h1>Descarga de datos Agroclimatologicos</h1>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".cd-example-modal-lg">Descargar Datos</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".cd-modal-lg">Descargar Et</button>
+    <div class="row text-center" style="margin-top:100px">
+        <img class="" src="~/dist/img/logo.png" />
+    </div>
+
+</section>
+<!-- /.content -->
+
+
+
+
+
+
+
+<div class="modal fade cd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+
+
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <strong class="panel-title">Descarga de datos Agroclimatologicos</strong>
+
+                </div>
+                <div class="panel-body">
+
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="select1">Estación</label>
+                        <div class="col-md-9">
+                            <select id="select1" name="select1" class="form-control">
+                                <option>Selecionar una estación</option>
+                                @foreach (var item in Model)
+                                {
+                                    <option value=@Html.DisplayTextFor(modelItem => item.Id)> @Html.DisplayFor(modelItem => item.NombreEstacion)</option>
+                                }
+                            </select>
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="select2">Datos</label>
+                        <div class="col-md-9">
+                            <select id="select2" name="select2" class="form-control">
+                                <option value="0">Elegir Opción</option>
+                                <option value="1">Datos cada 15 minutos</option>
+                                <option value="2">Datos diarios</option>
+
+                            </select>
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Sensores Disponibles</label>
+                        <div class="col-md-9 col-form-label" id="divSensorType">
+                            <input class="form-control" type="text" placeholder="No se han encontrado sensores" readonly>
+                            <!--Aqui van los checkbox en funcion de la esacion seleccionada
+                            Son llamados en el script-->
+                        </div>
+
+
+
+
+
+                    </div>
+
+
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="password-inputate-input">Fecha Desde</label>
+                        <div class="col-md-9">
+                            <input type="date" id="fecha1" name="fecha1" class="form-control" placeholder="Fecha">
+                            <span class="help-block">Ingresar fecha de inicio</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="password-inputate-input">Fecha Hasta</label>
+                        <div class="col-md-9">
+                            <input type="date" id="fecha2" name="fecha2" class="form-control" placeholder="Fecha">
+                            <span class="help-block">Ingresar fecha de inicio</span>
+                        </div>
+                    </div>
+
+
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Opciónes Avanzadas
+                    </button>
+
+                    <div class="collapse" id="collapseExample">
+                        <div class="panel panel-body">
+
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="select3">Separador de Datos</label>
+                                <div class="col-md-9">
+                                    <select id="select3" name="select3" class="form-control">
+                                        <option value="1">Punto y Coma (Excel)</option>
+                                        <option value="2">Coma (OpenOffice)</option>
+                                        <option value="3">Tabulador</option>
+
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="select4">Separador de decimales</label>
+                                <div class="col-md-9">
+                                    <select id="select4" name="select4" class="form-control">
+                                        <option value="1">Punto (en-US)</option>
+                                        <option value="2">Coma (es-CL)</option>
+
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="select5">Separador de miles</label>
+                                <div class="col-md-9">
+                                    <select id="select5" name="select5" class="form-control">
+                                        <option value="1">Sin separador</option>
+                                        <option value="2">Punto</option>
+                                        <option value="2">Coma</option>
+
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="select6">Máximo de filas</label>
+                                <div class="col-md-9">
+                                    <select id="select6" name="select6" class="form-control">
+                                        <option value="1">65535 Excel 2003 y OpenOffice</option>
+                                        <option value="2">1048576 Excel 2007</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="panel-footer">
+                    <button type="submit" class="btn btn-success" id="Descargar" onclick="descargarDatos()">
+                        <i class="fa fa-dot-circle-o"></i> Descargar
+                    </button>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade cd-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+
+
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <strong class="panel-title">Descarga de Indicadores</strong>
+
+                </div>
+                <div class="panel-body">
+
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="select1">Estación</label>
+                        <div class="col-md-9">
+                            <select id="select1" name="select1" class="form-control">
+                                <option>Selecionar una estación</option>
+                                @foreach (var item in Model)
+                                {
+                                    <option value=@Html.DisplayTextFor(modelItem => item.Id)> @Html.DisplayFor(modelItem => item.NombreEstacion)</option>
+                                }
+                            </select>
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="select2">Datos</label>
+                        <div class="col-md-9">
+                            <select id="select2" name="select2" class="form-control">
+                                <option value="0">Elegir Opción</option>
+                                <option value="1">Datos cada 15 minutos</option>
+                                <option value="2">Datos diarios</option>
+
+                            </select>
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Sensores Disponibles</label>
+                        <div class="col-md-9 col-form-label" id="divSensorType">
+                            <input class="form-control" type="text" placeholder="No se han encontrado sensores" readonly>
+                            <!--Aqui van los checkbox en funcion de la esacion seleccionada
+                            Son llamados en el script-->
+                        </div>
+
+
+
+
+
+                    </div>
+
+
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="password-inputate-input">Fecha Desde</label>
+                        <div class="col-md-9">
+                            <input type="date" id="fecha1" name="fecha1" class="form-control" placeholder="Fecha">
+                            <span class="help-block">Ingresar fecha de inicio</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="password-inputate-input">Fecha Hasta</label>
+                        <div class="col-md-9">
+                            <input type="date" id="fecha2" name="fecha2" class="form-control" placeholder="Fecha">
+                            <span class="help-block">Ingresar fecha de inicio</span>
+                        </div>
+                    </div>
+
+
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Opciónes Avanzadas
+                    </button>
+
+                    <div class="collapse" id="collapseExample">
+                        <div class="panel panel-body">
+
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="select3">Separador de Datos</label>
+                                <div class="col-md-9">
+                                    <select id="select3" name="select3" class="form-control">
+                                        <option value="1">Punto y Coma (Excel)</option>
+                                        <option value="2">Coma (OpenOffice)</option>
+                                        <option value="3">Tabulador</option>
+
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="select4">Separador de decimales</label>
+                                <div class="col-md-9">
+                                    <select id="select4" name="select4" class="form-control">
+                                        <option value="1">Punto (en-US)</option>
+                                        <option value="2">Coma (es-CL)</option>
+
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="select5">Separador de miles</label>
+                                <div class="col-md-9">
+                                    <select id="select5" name="select5" class="form-control">
+                                        <option value="1">Sin separador</option>
+                                        <option value="2">Punto</option>
+                                        <option value="2">Coma</option>
+
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="select6">Máximo de filas</label>
+                                <div class="col-md-9">
+                                    <select id="select6" name="select6" class="form-control">
+                                        <option value="1">65535 Excel 2003 y OpenOffice</option>
+                                        <option value="2">1048576 Excel 2007</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="panel-footer">
+                    <button type="submit" class="btn btn-success" id="Descargar" onclick="descargarDatos()">
+                        <i class="fa fa-dot-circle-o"></i> Descargar
+                    </button>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+  // Funcion que captura los datos del formulario y envia una consulta a la BD para recuperar los datos en un archivo CSV
+  function descargarDatos() {
+    var estacion = document.getElementById("select1").value;
+    var datos = document.getElementById("select2").value;
+    var fechaI = document.getElementById("fecha1").value;
+    var fechaT = document.getElementById("fecha2").value;
+    var sensores = $('#divSensorType')[0];
+
+
+    var separadorDatos = document.getElementById("select3").value;
+    var separadorDecimales = document.getElementById("select4").value;
+    var separadorMiles = document.getElementById("select5").value;
+
+    var childSize = sensores.childNodes.length;
+    console.log("chldSize: " + childSize);
+    var check = [];
+    for (var i = 0; i < childSize; i++)
+    {
+      console.log("ChildValue: " + sensores.childNodes[i].childNodes[0].value);
+      //console.log("asdf: " + sensores.childNodes[i].childNodes[0].checked);
+      if (sensores.childNodes[i].childNodes[0].checked == false) {
+        console.log("ChildValue no sel: " + sensores.childNodes[i].childNodes[0].value);
+        check.push(sensores.childNodes[i].childNodes[0].value);
+      }
+
+      console.log("tamaño arreglo: " + check.length);
+    }
+
+    $.ajax(
+        {
+          type: "POST",
+          url: "@Url.Action("EnviarConsulta", "AgroDatos")",
+          data: {
+            estacion: estacion,
+            datos: datos,
+            fechaI: fechaI,
+            fechaT: fechaT,
+            separadorDatos: separadorDatos,
+            separadorDecimales: separadorDecimales,
+            separadorMiles: separadorMiles,
+            check: check
+
+          },
+
+          error: function (jqXHR, exception) {
+            var msg = '';
+            if (jqXHR.status === 0) {
+              msg = 'Not connect.\n Verify Network.';
+            } else if (jqXHR.status == 404) {
+              msg = 'Requested page not found. [404]';
+            } else if (jqXHR.status == 500) {
+              msg = 'Internal Server Error [500].';
+            } else if (exception === 'parsererror') {
+              msg = 'Requested JSON parse failed.';
+            } else if (exception === 'timeout') {
+              msg = 'Time out error.';
+            } else if (exception === 'abort') {
+              msg = 'Ajax request aborted.';
+            } else {
+              msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            }
+            alert("error");
+            console.log(msg);
+          },
+
+          //Crea un link para descargar el archivo CSV generado
+          success:function (data, status) {
+            console.log("success");
+            var contentType = 'text/csv';
+            var blob = new Blob([data], { type: contentType });
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = "test.csv";
+            link.textContent = "Descargar CSV";
+            link.click();
+            console.log("despues de la descarga");
+            }
+          })
+
+  }
+</script>
+
+
+<script>
+
+  function obtenerDatos() {
+    var estacion = document.getElementById("select1").value;
+    var datos = document.getElementById("select2").value;
+    var fechaI = document.getElementById("fecha1").value;
+    var fechaT = document.getElementById("fecha2").value;
+    var sensores = $('#divSensorType')[0];
+    /*for (int i = 0; i < sensores.children.length; i++)
+    {
+      var child = sensores.children[i];
+      console.log("Sensores: " + child);
+    }*/
+
+
+
+    console.log("Estacion: " + estacion);
+    console.log("Datos: " + datos);
+    console.log("Inicio: " + fechaI);
+    console.log("Termino: " + fechaT);
+
+
+    //OPCIONES AVANZADAS
+
+    var separadorDatos = document.getElementById("select3").value;
+    var separadorDecimal = document.getElementById("select4").value;
+    var separadorMiles = document.getElementById("select5").value;
+    var maxFilas = document.getElementById("select6").value;
+    console.log("Sep datos: " + separadorDatos);
+    console.log("Sep decimal: " + separadorDecimal);
+    console.log("sep miles: " + separadorMiles);
+    console.log("maxFila: " + maxFilas);
+
+
+  }
+
+
+
+  //Funcion que dibuja los checkbox de los instrumentos(sensores) disponibles en funcion de la estacion seleccionada
+  $('#select1').change(function () {
+    var id = document.getElementById("select1").value; //id del imput de seleccion
+    /*console.log("SET FORMCONTROL");
+    console.log("SET FORMCONTROLaaa");
+    console.log("ID: "+id);*/
+    getSensorNames(id);
+
+
+    //LLamada a la BD que recibe el id de la estacion y retorna los sensores disponibles en froma de checkbox
+    function getSensorNames(id) {
+      console.log("funcion y el id: "+id);
+      $.ajax(
+        {
+          type: "GET",
+          url: '@Url.Action("NombreSensores", "AgroDatos")',
+          data: {
+            id: id
+          },
+          dataType: "json",
+          contentType: "application/json; charset=utf-8",
+          error: function (jqXHR, exception) {
+            var msg = '';
+            if (jqXHR.status === 0) {
+              msg = 'Not connect.\n Verify Network.';
+            } else if (jqXHR.status == 404) {
+              msg = 'Requested page not found. [404]';
+            } else if (jqXHR.status == 500) {
+              msg = 'Internal Server Error [500].';
+            } else if (exception === 'parsererror') {
+              msg = 'Requested JSON parse failed.';
+            } else if (exception === 'timeout') {
+              msg = 'Time out error.';
+            } else if (exception === 'abort') {
+              msg = 'Ajax request aborted.';
+            } else {
+              msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            }
+            alert("error");
+            console.log(msg);
+          },
+
+          success: function (data, status, result, lista) {
+            //console.log(data.lista.length())
+            //console.log(Object.values(data));
+            //console.log(lista);
+            //alert(Object.values(data) + "\nStatus: " + status);
+            //console.log(data.length);
+
+            if (data.length > 0) {
+                var checkBox = '<div class="col-md-8 col-form-label" id="divSensorType">';
+                checkBox += '<form class="form-inline">';
+                $.each(data, function (i, Sensor) {
+                    checkBox += '<div class="form-group">'
+                    checkBox += '<div class="custom-control custom-checkbox custom-control-inline">';
+                    checkBox += '<input class="custom-control-input" type="checkbox" value = "' + Sensor.id + '" id = "check' + i + '"checked>';
+                    checkBox += '<label class="custom-control-label" for= "check' + i + '">' + Sensor.nombreSensor + '</label ></div></div>';
+                });
+                checkBox += '</form>';
+              $('#divSensorType').replaceWith(checkBox);
+            }
+          }
+        })
+    }
+
+
+  });
+
+
+</script>
+
+

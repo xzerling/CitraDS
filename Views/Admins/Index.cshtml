@@ -1,0 +1,140 @@
+﻿@model ViewModel
+
+@{
+    ViewData["Title"] = "Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @ViewData["Title"]
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Lista de Usuarios</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Rol</th>
+                                <th>Estacion</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Admins admins in Model.Admins)
+                            {
+                                <tr>
+                                    <td>
+                                        <input type="hidden" id="@admins.Id" value="@admins.Id" readonly>
+                                        @admins.Id
+                                    </td>
+                                    <td>
+                                        @admins.FullName
+                                    </td>
+                                    <td>
+                                        @admins.Email
+                                    </td>
+                                    <td>
+                                        @admins.Roles.Title
+                                    </td>
+                                    <td>
+                                        <select id="@admins.Id" name="@admins.Id" class="form-control">
+                                            <option>Selecionar una estación</option>
+                                            @foreach (Estacioneve agrodatos in Model.Agrodatos)
+                                            {
+                                                <option value=@agrodatos.Id> @agrodatos.Nombre</option>
+
+                                            }b 
+                                        </select>
+                                        <button type="submit" class="btn btn-success" id="Asignar" onclick="obtenerDatos(@admins.Id)">Asignar</button>
+                                    </td>
+                                    <td>
+                                        <a href="/Admins/Edit/@admins.Id">Editar</a> |
+                                        <a href="/Admins/Delete/@admins.Id">Borrar</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(function () {
+        $('#example2').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': false,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        })
+    })</script>
+
+<script>
+    function obtenerDatos() {
+
+        var id = document.getElementById("select1").value; //id del imput de seleccion
+        var idUsuario = document.getElementById("fecha2").value; //id del imput de seleccion
+            /*console.log("SET FORMCONTROL");
+            console.log("SET FORMCONTROLaaa");
+            console.log("ID: "+id);*/
+            //getSensorNames(id);
+        console.log("valor: " + id)
+        console.log("valorUsuario: " + idUsuario)
+
+        $.ajax(
+        {
+          type: "POST",
+          url: "@Url.Action("Create", "EstacionesAsignadas")",
+          data: {
+              id: id,
+              idUsuario: idUsuario
+          },
+
+          error: function (jqXHR, exception) {
+            var msg = '';
+            if (jqXHR.status === 0) {
+              msg = 'Not connect.\n Verify Network.';
+            } else if (jqXHR.status == 404) {
+              msg = 'Requested page not found. [404]';
+            } else if (jqXHR.status == 500) {
+              msg = 'Internal Server Error [500].';
+            } else if (exception === 'parsererror') {
+              msg = 'Requested JSON parse failed.';
+            } else if (exception === 'timeout') {
+              msg = 'Time out error.';
+            } else if (exception === 'abort') {
+              msg = 'Ajax request aborted.';
+            } else {
+              msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            }
+            alert("error");
+            console.log(msg);
+          },
+
+          success:function (data, status) {
+            console.log("success");
+            }
+          })
+
+
+    }
+</script>

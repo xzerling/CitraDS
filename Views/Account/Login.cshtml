@@ -81,6 +81,7 @@
         function Validate() {
 
             console.log("sctipt de login");
+
         $.ajax(
         {
           type: "POST",
@@ -93,8 +94,13 @@
             alert("There is a Problem, Try Again!");
           },
           success: function (result) {
-            console.log(result);
-            if (result.status == true) {
+              console.log(result);
+              console.log("esperando 3 seg");
+              sleep(3000);
+              console.log("ya esperó")
+              if (result.status == true) {
+                  console.log("esperando 3 para la redireccion seg");
+                  sleep(3000);
               window.location.href = '@Url.Action("Index", "Agrodatos")';
             }
             else {
@@ -102,7 +108,16 @@
             }
           }
         });
-      }
+        }
+
+        function sleep(milliseconds) {
+            var start = new Date().getTime();
+            for (var i = 0; i < 1e7; i++) {
+                if ((new Date().getTime() - start) > milliseconds) {
+                    break;
+                }
+            }
+        }
     </script>
 
 </body>

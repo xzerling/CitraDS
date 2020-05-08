@@ -12,9 +12,10 @@ namespace CitraDataStore.Controllers
 {
     public class AgrodatosController : Controller
     {
-        SensoresContext context = new SensoresContext();
+        readonly SensoresContext context = new SensoresContext();
 
-        [AuthorizedAction]
+        
+
         public IActionResult Index()
         {
             

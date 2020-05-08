@@ -6,6 +6,6 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git\CitraDS\bin\Debug\netcoreapp2.2\publish\</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git\CitraDS\bin\Release\netcoreapp2.2\publish\</_PublishTargetUrl>
   </PropertyGroup>
 </Project>

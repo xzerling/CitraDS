@@ -95,12 +95,12 @@
           },
           success: function (result) {
               console.log(result);
-              console.log("esperando 3 seg");
-              sleep(3000);
-              console.log("ya esperó")
+              //console.log("esperando 3 seg");
+              //sleep(3000);
+              //console.log("ya esperó")
               if (result.status == true) {
                   console.log("esperando 3 para la redireccion seg");
-                  sleep(3000);
+                  //sleep(3000);
               window.location.href = '@Url.Action("Index", "Agrodatos")';
             }
             else {
@@ -109,7 +109,7 @@
           }
         });
         }
-
+        /*
         function sleep(milliseconds) {
             var start = new Date().getTime();
             for (var i = 0; i < 1e7; i++) {
@@ -117,7 +117,7 @@
                     break;
                 }
             }
-        }
+        }*/
     </script>
 
 </body>

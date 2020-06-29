@@ -1,18 +1,420 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>
-        Inicio
-    </h1>
-</section>
-<!-- Main content -->
-<section class="content container-fluid">
-    <h1>Pagina de Inicio</h1>
-    <div class="row text-center" style="margin-top:100px">
-        <img class="" src="~/dist/img/logo.png" />
+﻿
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tiled WMS</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v5.3.0/css/ol.css" type="text/css">
+    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+
+</head>
+
+<body>
+
+    <h2>Mapa de Prueba</h2>
+
+    <div class="panel panel-primary">
+        <div class="panel-body">
+            <div id="map" class="map"></div>
+        </div>
     </div>
 
-</section>
-<!-- /.content -->
+    <div class="container">
+
+        <div class="row justify-content-start">
+
+
+
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="panel panel-primary">
+                            <div class="panel-body">
+                                <h1>Indicadores</h1>
+
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                                    <label class="custom-control-label" for="customRadio1">NDVI</label>
+                                </div>
+
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                                    <label class="custom-control-label" for="customRadio2">ET24</label>
+                                </div>
+
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
+                                    <label class="custom-control-label" for="customRadio3">LAI</label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="panel panel-primary">
+                            <div class="panel-body">
+
+                                <div>
+                                    <button type="button" id="save" onclick="printpoly()" class="btn btn-success">Guardar poligono</button>
+                                </div>
+                                <div>
+                                    <button type="button" id="sum" class="btn btn-success">Calcular suma</button>
+                                </div>
+
+
+
+                                <div class="panel panel-primary">
+                                    <div class="panel-body"> Coordenadas
+                                        <div type="text" id="mouse-position"></div>
+                                    </div>
+                                </div>
+
+
+
+
+                                        <div>
+                                            <label>Projection </label>
+                                            <select id="projection">
+                                                <option value="EPSG:4326">EPSG:4326</option>
+                                                <option value="EPSG:3857">EPSG:3857</option>
+                                                <option value="EPSG:32719">EPSG:32719</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label>Precision </label>
+                                            <input id="precision" type="number" min="0" max="12" value="4" />
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                </div>
+            </div>
+
+            <div class="container">
+
+
+
+
+
+
+
+                <form class="form-inline">
+                    <label>Geometry type &nbsp;</label>
+                    <select id="type">
+                        <option value="Polygon">Polygon</option>
+                        <!--
+                        <option value="Point">Point</option>
+                        <option value="LineString">LineString</option>
+                        <option value="Circle">Circle</option>
+                        -->
+                    </select>
+                </form>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <button type="button" id="b1" value="btn1" onclick="addInteraction(); disableB1()" class="btn btn-primary btn-lg btn-block">Dibujar Poligono</button>
+    <button type="button" id="b2" value="btn2" onclick="removeInteraction(); disableB2()" disabled="true" class="btn btn-primary btn-lg btn-block">Terminar</button>
+
+</body>
+</html>
+
+
+
+<script>
+
+    const pro = proj4.defs("EPSG:32719", "+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs");
+    ol.proj.proj4.register(proj4);
+
+    var mousePositionControl = new ol.control.MousePosition({
+        coordinateFormat: ol.coordinate.createStringXY(4),
+        projection: 'EPSG:4326',
+        // comment the following two lines to have the mouse position
+        // be placed within the map.
+        className: 'custom-mouse-position',
+        target: document.getElementById('mouse-position'),
+        undefinedHTML: '&nbsp;'
+    });
+
+    //Mapa Satelital
+    var raster = new ol.layer.Tile({
+        opacity: 0.7,
+        proyection: 'EPSG:32719',
+        source: new ol.source.XYZ({
+            attributions: ['Powered by Esri',
+                'Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community'],
+            attributionsCollapsible: false,
+            
+            url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+            proyection: 'EPSG:32719',
+            maxZoom: 23
+
+        })
+    });
+
+    //imagen Satelital (Se debe modificar para ir cambiando por fecha)
+    var landsat = new ol.layer.Tile({
+        opacity: 0.7,
+        proyection: 'EPSG:32719',
+        source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/localhost/wms?',
+            params: { 'LAYERS': 'localhost:LC08_L1TP_233086_20131005_20170429_01_T1_sr_ndvi'},
+            proyection: 'EPSG:32719',
+            serverType: 'geoserver',
+            
+            // Countries have transparency, so do not fade tiles:
+            transition: 0
+        })
+    });
+
+    var tiff_de_geos = new ol.layer.Tile({
+        proyection: 'EPSG:32719',
+        source: new ol.source.TileWMS({
+        url: 'http://localhost:8080/geoserver/localhost/wms?',
+        params: { 'LAYERS': 'localhost:LC08_L1TP_233086_20131005_20170429_01_T1_sr_ndvi', 'FORMAT': 'image/tiff'},
+        proyection: 'EPSG:32719',
+            serverType: 'geoserver'
+        })
+    });
+
+    var projectionSelect = document.getElementById('projection');
+    projectionSelect.addEventListener('change', function (event) {
+        mousePositionControl.setProjection(event.target.value);
+    });
+
+    var precisionInput = document.getElementById('precision');
+    precisionInput.addEventListener('change', function (event) {
+        var format = ol.coordinate.createStringXY(event.target.valueAsNumber);
+        mousePositionControl.setCoordinateFormat(format);
+    });
+
+    //Mapa plano con calles
+    var street = new ol.layer.Tile({ source: new ol.source.OSM() });
+
+    
+
+    //Vector para guardar los poligonos.
+    var source = new ol.source.Vector({
+        proyection: 'EPSG:3857'
+    })
+
+    //capa para agregar los vectores
+    var vector = new ol.layer.Vector({
+        source: source,
+        proyection: 'EPSG:3857'
+    });
+
+
+    //"Constructor" del elemento mapa, Se le agregan las capas de satelite, imagen, y calle. Asi como tambien el vector
+    // donde son guardados los poligonos.
+    var map = new ol.Map({
+        pixelRatio: 1,
+        layers: [street, raster, landsat, vector],
+        target: 'map',
+        controls: ol.control.defaults().extend([mousePositionControl]),
+        view: new ol.View({
+            proyection: 'EPSG:32719',
+            center: [0, 0],
+            zoom: 5
+        })
+    });
+
+    var typeSelect = document.getElementById('type');
+    var sumaaa;
+    var geo;
+
+    var ondrawend = async function (e) {
+        console.log(e.feature.getGeometry());
+        var allfeat = vector.getSource().getFeatures();
+        console.log("allfeats: ", allfeat);
+
+
+        /*
+
+        var cord = proj4("EPSG:4326", pro, e.feature.getGeometry().getCoordinates()[0][0]);
+        console.log("vord: ", cord);
+        const raster = await geoblaze.load("http://localhost:8080/geoserver/localhost/wms?service=WMS&version=1.1.0&request=GetMap&layers=localhost:LC08_L1TP_233086_20131005_20170429_01_T1_sr_ndvi&bbox=126584.999972549,5732785.00003017,355814.99997254903,5963515.00003017&width=763&height=768&srs=EPSG:32719&format=image/geotiff");
+        var sumaaa = geoblaze.sum(raster);
+        console.log("sm original: ", sumaaa);
+
+        ge = e.feature;
+        geo = ge.getGeometry();
+        console.log("poligono original: ", geo.getCoordinates());
+
+        
+
+        var stringjson = { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[-8048819.078429057, -4507950.1801465545], [-8051876.559560465, -4528741.051840122], [-8029251.199188053, -4529964.044292685], [-8048819.078429057, -4507950.1801465545]]] }, "properties": null };
+
+        var geojsonbueno = new ol.format.GeoJSON().readFeatures(stringjson);
+
+        console.log("bueno: ", geojsonbueno);
+
+
+
+
+        var geojson = new ol.format.GeoJSON();
+        var featgjson = geojson.writeGeometryObject(geo, pro);
+        console.log("geojson: ", featgjson);
+        var newfeat = new ol.Feature(geo.clone().transform('EPSG:3857', 'EPSG:4326'));
+        console.log("newfeat: ", newfeat);
+        var txtarr = [];
+        txtarr.push(JSON.stringify(featgjson));
+
+        console.log("arraytextgeojson: ", txtarr);
+        
+        var contentType = 'text/json';
+        var blob = new Blob([txtarr], { type: contentType });
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = "test.geojson";
+        link.textContent = "Descargar poly";
+        //link.click();
+        console.log("despues de la descarga");
+  */
+        
+        //var carp = e.feature.getGeometry().transform('EPSG:3857',"EPSG:32719");
+        //console.log("funcion ondrawned: ", carp);
+        /*
+        var pool = e.feature.getGeometry();
+        console.log("funcion ondrawned2: ", pool);
+        console.log("antes del raster ");
+        //const raster = await geoblaze.load("http://localhost:8080/geoserver/localhost/wms?service=WMS&version=1.1.0&request=GetMap&layers=localhost:LC08_L1TP_233086_20131005_20170429_01_T1_sr_ndvi&bbox=126584.999972549,5732785.00003017,355814.99997254903,5963515.00003017&width=763&height=768&srs=EPSG:32719&format=image/geotiff");
+        console.log("rast: ", raster);
+
+        var arr = [[geo.flatCoordinates[0], geo.flatCoordinates[1]],
+        [geo.flatCoordinates[2], geo.flatCoordinates[3]],
+        [geo.flatCoordinates[4], geo.flatCoordinates[5]],
+        [geo.flatCoordinates[6], geo.flatCoordinates[7]]
+        ]
+
+        console.log("arr: ", arr);
+        geo.setCoordinates([geo.flatCoordinates[0], geo.flatCoordinates[1], geo.flatCoordinates[2], geo.flatCoordinates[3], geo.flatCoordinates[4], geo.flatCoordinates[5], geo.flatCoordinates[6], geo.flatCoordinates[7]]);
+        console.log("poligono inyectado: ", geo.getCoordinates());
+
+        
+
+        sumaaa = geoblaze.identify(raster, [355814.99997254903,
+            5963515.00003017]);
+        console.log("mean original2: ", sumaaa);
+
+        var sumaaa = geoblaze.sum(raster, geojsonbueno);
+        console.log("sm con geojson hardcoded: ", sumaaa);*/
+    };
+
+    var draw; // global so we can remove it later
+    function addInteraction() {
+        var value = typeSelect.value;
+        if (value !== 'None') {
+            draw = new ol.interaction.Draw({
+                source: source,
+                type: typeSelect.value
+            });
+            draw.on('drawend', ondrawend);
+            map.addInteraction(draw);
+            console.log("hallo");
+        }
+    }
+
+    function removeInteraction() {
+        map.removeInteraction(draw);
+    }
+
+    // Habilita/desabilida los botones
+    function disableB2() {
+        document.getElementById("b1").disabled = false;
+        document.getElementById("b2").disabled = true;
+    }
+    function disableB1() {
+        document.getElementById("b1").disabled = true;
+        document.getElementById("b2").disabled = false;
+    }
+
+
+    function deletePoly() {
+
+    }
+
+
+    /**
+      * Handle change event.
+      */
+    typeSelect.onchange = function () {
+        map.removeInteraction(draw);
+        addInteraction();
+    };
+
+
+    /*
+     *
+     * TEST
+     *
+     * */
+
+
+    //var GjsonPar = new ol.Format.GeoJSON();
+
+    //var polyJson = GjsonPar.write(vector.features);
+
+
+    async function  printpoly() {
+        var interaction = vector.getSource().getFeatures();
+        interaction.forEach(async function (feature) {
+            //var newgeo = feature;
+            //newgeo.getGeometry().transform('EPSG:3857', "EPSG:32719");
+            var newfeat = feature.clone();
+            var transform = newfeat.getGeometry().transform('EPSG:3857', "EPSG:32719");
+            var coord = newfeat.getGeometry().getCoordinates();
+
+
+            console.log("poligono: " + coord);
+            //coord = ol.proj.transform(coord, 'EPSG:32719', 'EPSG:4326');
+
+            const img = await geoblaze.load("http://localhost:8080/geoserver/localhost/wms?service=WMS&version=1.1.0&request=GetMap&layers=localhost:LC08_L1TP_233086_20131005_20170429_01_T1_sr_ndvi&bbox=126584.999972549,5732785.00003017,355814.99997254903,5963515.00003017&width=763&height=768&srs=EPSG:32719&format=image/geotiff");
+            //const img = await geoblaze.load("http://localhost:8080/geoserver/localhost/wms?service=WMS&version=1.1.0&request=GetMap&layers=localhost:Ts&bbox=64051.700592833,4191661.52438661,195811.700592833,4308241.52438661&width=768&height=679&srs=EPSG:32611&format=image/geotiff");
+            var sumaaa = geoblaze.sum(img);
+            console.log("sm original: ", sumaaa);
+            var lonlat = [223885.153852, 5786947.319458];
+            var sum = geoblaze.identify(img, lonlat);
+            console.log("sm crop: ", sum);
+            console.log("img raster: ", img);
+
+            var swissCoord = ol.proj.transform(lonlat, 'EPSG:4326', 'EPSG:32719');
+            console.log("transform: ", swissCoord)
+            swissCoord = ol.proj.transform(lonlat, 'EPSG:32719', 'EPSG:4326');
+            console.log("transform 4326: ", swissCoord)
+            swissCoord = ol.proj.transform(lonlat, 'EPSG:4326', 'EPSG:32719');
+            console.log("transform 4326 -> 32719: ", swissCoord)
+            swissCoord = ol.proj.transform(lonlat, 'EPSG:32719', 'EPSG:3857');
+            console.log("transform 3857: ", swissCoord)
+
+            var suma = geoblaze.sum(img, coord);
+            console.log("sm: ", suma);
+
+        });
+    }
+
+</script>
+
+
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .map {
+        height: 70%;
+        width: 100%;
+    }
+</style>
+

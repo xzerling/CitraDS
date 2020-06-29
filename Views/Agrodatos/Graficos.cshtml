@@ -1,0 +1,194 @@
+﻿@model IEnumerable<CitraDataStore.Models.Agrodatos>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>Graficos</title>
+    <!-- Geoblaze -->
+    <script src="~/npmlib/chart.js/dist/Chart.bundle.js"></script>
+    <script src="~/npmlib/chartjs-plugin-zoom/dist/chartjs-plugin-zoom.js"></script>
+    <script src="~/npmlib/hammerjs/hammer.js"></script>
+
+
+
+
+</head>
+
+
+<body>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <strong class="panel-title">Grafico de datos disponibles</strong>
+
+            <select id="select1" name="select1" class="form-control">
+                <option>Selecionar una estación</option>
+                @foreach (var item in Model)
+                {
+                    <option value=@Html.DisplayTextFor(modelItem => item.Id)> @Html.DisplayFor(modelItem => item.NombreEstacion)</option>
+                }
+
+            </select>
+
+            <input type="date" id="fechaI" name="fechaI" class="form-control" placeholder="Fecha de inicio">
+            <span class="help-block">Ingresar fecha de inicio</span>
+
+            <input type="date" id="fechaT" name="fechaT" class="form-control" placeholder="Fecha de Termino">
+            <span class="help-block">Ingresar fecha de Termino</span>
+
+            <button type="submit" class="btn btn-success" id="graficar" onclick="dibujarGrafico()">
+                <i class="fa fa-dot-circle-o"></i> Graficar
+            </button>
+        </div>
+
+        <div class="panel-body">
+
+            <canvas id="line-chart" width="800" height="450"></canvas>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
+
+
+<script>
+    function dibujarGrafico() {
+        console.log("holamundo");
+
+        var estacion = document.getElementById("select1").value; //id del imput de seleccion
+        var fechaI = document.getElementById("fechaI").value;
+        var fechaT = document.getElementById("fechaT").value;
+        console.log("comparar fechas", fechaI > fechaT)
+        if (fechaI > fechaT) {
+            alert("Fecha de Termino es anterior a la de Inicio");
+        }
+        else {
+
+            getSensorNames(estacion, fechaI, fechaT);
+
+        function getSensorNames(estacion, fechaI, fechaT) {
+
+            console.log("funcion y el id: " + estacion, fechaI, fechaT);
+            $.ajax(
+                {
+                    type: "GET",
+                    url: '@Url.Action("ValorPiranometro", "AgroDatos")',
+                    data: {
+                        estacion: estacion,
+                        fechaI: fechaI,
+                        fechaT: fechaT
+                    },
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    error: function (jqXHR, exception) {
+                        var msg = '';
+                        if (jqXHR.status === 0) {
+                            msg = 'Not connect.\n Verify Network.';
+                        } else if (jqXHR.status == 404) {
+                            msg = 'Requested page not found. [404]';
+                        } else if (jqXHR.status == 500) {
+                            msg = 'Internal Server Error [500].';
+                        } else if (exception === 'parsererror') {
+                            msg = 'Requested JSON parse failed.';
+                        } else if (exception === 'timeout') {
+                            msg = 'Time out error.';
+                        } else if (exception === 'abort') {
+                            msg = 'Ajax request aborted.';
+                        } else {
+                            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                        }
+                        alert("error");
+                        console.log(msg);
+                    },
+
+
+                    success: function (data, status, result, lista) {
+                       // console.log(data.datos.length())
+                        console.log("objetcta.values(data)", Object.values(data));
+                        //console.log("data: ", data[0].fecha)
+
+                        var labels = data.map(function (e) {
+                            return e.fecha;
+                        });
+                        var datos = data.map(function (e) {
+                            return e.valor;
+                        });;
+
+
+                        new Chart(document.getElementById("line-chart"), {
+                            type: 'line',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    data: datos,
+                                    label: "Rad W/m2",
+                                    fill: true,
+                                    backgroundColor: 'rgba(0, 119, 204, 0.3)'
+
+                                }
+                                ]
+                            },
+
+                            options: {
+                                title: {
+                                    display: true,
+                                    text: 'Valor de Radiacion Medido por piranometro al mediodia'
+                                },
+                                scales: {
+                                    xAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                },
+                                plugins: {
+                                    zoom: {
+                                        // Container for pan options
+                                        pan: {
+                                            // Boolean to enable panning
+                                            enabled: true,
+
+                                            // Panning directions. Remove the appropriate direction to disable
+                                            // Eg. 'y' would only allow panning in the y direction
+                                            mode: 'x'
+                                        },
+
+                                        // Container for zoom options
+                                        zoom: {
+                                            // Boolean to enable zooming
+                                            enabled: true,
+
+                                            // Zooming directions. Remove the appropriate direction to disable
+                                            // Eg. 'y' would only allow zooming in the y direction
+                                            mode: 'x',
+                                        }
+                                    }
+                                }
+                            }
+                        });
+
+                        //alert(Object.values(data) + "\nStatus: " + status);
+                        //console.log(data.length);
+                    }
+                })
+        }
+        }
+
+
+
+
+    }
+
+
+
+
+
+
+</script>
+

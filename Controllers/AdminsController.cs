@@ -42,10 +42,11 @@ namespace CitraDataStore.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Id,FullName,Email,Password,RolesId")] Admins admins)
+        public async Task<IActionResult> Create([Bind("Id,FullName,Email,Password,RolesId,IdEstacionesAsignadas")] Admins admins)
         {
             if (ModelState.IsValid)
             {
+
                 _context.Add(admins);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -123,6 +124,23 @@ namespace CitraDataStore.Controllers
         private bool AdminsExists(int id)
         {
             return _context.Admins.Any(e => e.Id == id);
+        }
+
+        public string LinkEstacion(int[] check)
+        {
+            //List<EstacionesAsignadas> lista = new List<EstacionesAsignadas>();
+            int size = check.Length;
+
+            string estaciones = "";
+            for (int i = 0; i < size; i++)
+            {
+                if(i == 0)
+                {
+                    estaciones = check[0].ToString();
+                }
+                estaciones = estaciones + "," + check[i].ToString();
+            }
+            return estaciones;
         }
     }
 

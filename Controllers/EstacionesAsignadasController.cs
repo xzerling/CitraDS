@@ -6,12 +6,14 @@ using CitraDataStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using CitraDataStore.Models;
 
 namespace CitraDataStore.Controllers
 {
     public class EstacionesAsignadasController : Controller
     {
         MyDbContext _context = new MyDbContext();
+        readonly SensoresContext context = new SensoresContext();
 
 
         // GET: Admins
@@ -114,6 +116,14 @@ namespace CitraDataStore.Controllers
         private bool AdminsExists(int id)
         {
             return _context.Admins.Any(e => e.Id == id);
+        }
+
+        [HttpGet]
+        public JsonResult NombreEstaciones()
+        {
+            //SensoresContext context = HttpContext.RequestServices.GetService(typeof(CitraDataStore.SensoresContext)) as SensoresContext;
+            List<Agrodatos> lista = context.GetStations();
+            return Json(lista);
         }
     }
 }

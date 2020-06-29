@@ -90,3 +90,6 @@ C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git\CitraDS\obj\Debug\netcoreap
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git\CitraDS\obj\Debug\netcoreapp2.2\CitraDataStore.pdb
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git\CitraDS\obj\Debug\netcoreapp2.2\CitraDataStore.genruntimeconfig.cache
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git\CitraDS\obj\Debug\netcoreapp2.2\CitraDataStore.csproj.CopyComplete
+C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git\CitraDS\bin\Debug\netcoreapp2.2\package-lock.json
+C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git\CitraDS\bin\Debug\netcoreapp2.2\package.json
+C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git\CitraDS\obj\Debug\netcoreapp2.2\Razor\Views\Agrodatos\Graficos.cshtml.g.cs

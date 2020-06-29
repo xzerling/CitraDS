@@ -23,6 +23,18 @@ namespace CitraDataStore.Controllers
             return View(lista);
         }
 
+        public IActionResult Graficos()
+        {
+            List<Agrodatos> lista = context.GetPira();
+            return View(lista);
+        }
+
+        public JsonResult ValorPiranometro(string estacion, string fechaI, string fechaT)
+        {
+            List<DatosGrafico> resultado = context.GetValorPiranometro(estacion, fechaI, fechaT);
+            return Json(resultado);
+        }
+
 
         [HttpGet]
         public JsonResult NombreSensores(int id)

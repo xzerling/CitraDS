@@ -51,6 +51,30 @@ namespace CitraDataStore
             return estaciones;
         }
 
+        public List<Agrodatos> GetPira()
+        {
+            List<Agrodatos> estaciones = new List<Agrodatos>();
+            using (MySqlConnection conn = GetDefaultConn())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("SELECT estacioneve.nombre, instrumento.id FROM instrumento, estacioneve WHERE estacioneve.id = instrumento.estacion_id  AND instrumento.modelo = 'Pyranometer SP-Lite'", conn);
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        estaciones.Add(new Agrodatos()
+                        {
+                            NombreEstacion = reader.GetString("nombre"),
+                            Id = reader.GetInt32("id")
+
+                        });
+                    }
+                }
+                conn.Close();
+            }
+            return estaciones;
+        }
+
         public List<Agrodatos> GetInstrumentos(int id)
         {
             List<Agrodatos> Instrumentos = new List<Agrodatos>();
@@ -261,6 +285,35 @@ namespace CitraDataStore
 
             }
             return reporte;
+        }
+
+        public List<DatosGrafico> GetValorPiranometro(string estacion, string fechaI, string fechaT)
+        {
+            List<DatosGrafico> datos = new List<DatosGrafico>();
+            using (MySqlConnection conn = GetDefaultConn())
+            {
+                conn.Open();
+                string consulta = "SELECT fecha, medicion FROM `medicion` WHERE instrumento_id = @estacion And (fecha BETWEEN @fechaI AND @fechaT) AND hora = '12:00'";
+                MySqlCommand cmd = new MySqlCommand(consulta, conn);
+                cmd.Parameters.AddWithValue("@estacion", estacion);
+                cmd.Parameters.AddWithValue("@fechaI", fechaI);
+                cmd.Parameters.AddWithValue("@fechaT", fechaT);
+
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        datos.Add(new DatosGrafico()
+                        {
+                            fecha = reader["fecha"].ToString(),
+                            valor = (double)reader["medicion"]
+                        });
+                    }
+                }
+                conn.Close();
+            }
+            return datos;
+
         }
 
     }

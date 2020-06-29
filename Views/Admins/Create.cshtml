@@ -1,9 +1,14 @@
 ﻿@model CitraDataStore.Models.Admins
 
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 @{
     ViewData["Title"] = "Crear Usuario";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -12,7 +17,7 @@
     </h1>
 </section>
 <!-- Main content -->
-<section class="content container-fluid">
+<body class="content container-fluid">
     <div class="row">
         <!-- left column -->
         <div class="col-md-12">
@@ -23,8 +28,8 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form  method="post" action="/Admins/Create">
-                    <div class="box-body">
+                <form method="post" action="/Admins/Create">
+                    <div onload="console.log('The Script will load now.')" class="box-body">
                         <div class="form-group">
                             <label for="inputEmail3">Nombre</label>
                             <input type="text" class="form-control" id="FullName" name="FullName" placeholder="Nombre">
@@ -41,6 +46,16 @@
                             <label asp-for="RolesId" class="control-label"></label>
                             @Html.DropDownList("RolesId", null, htmlAttributes: new { @class = "form-control" })
                         </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Estaciones Disponibles para asignar</label>
+                            <div class="col-md-9 col-form-label" id="divEstacion">
+                                <input class="form-control" type="text" placeholder="No se han encontrado Estaciónes" readonly>
+                                <!--Aqui van los checkbox en funcion de la esacion seleccionada
+                                    Son llamados en el script-->
+                            </div>
+
+                        </div>
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
@@ -50,4 +65,90 @@
                 </form>
             </div>
             <!-- /.box -->
-</section>
+        </div>
+    </div>
+
+</body>
+
+<script>
+
+    //document.getElementById("divEstacion").onload() = function () { getStationsNames() }
+
+    function getStationsNames() {
+
+
+        var sensores = $('#divEstacion')[0];
+
+        var childSize = sensores.childNodes.length;
+        console.log("chldSize: " + childSize);
+        var check = [];
+        for (var i = 0; i < childSize; i++) {
+            console.log("ChildValue: " + sensores.childNodes[i].childNodes[0].value);
+            //console.log("asdf: " + sensores.childNodes[i].childNodes[0].checked);
+            if (sensores.childNodes[i].childNodes[0].checked == false) {
+                console.log("ChildValue no sel: " + sensores.childNodes[i].childNodes[0].value);
+                check.push(sensores.childNodes[i].childNodes[0].value);
+            }
+
+            console.log("tamaño arreglo: " + check.length);
+        }
+
+
+
+      console.log("funcion y el id: ");
+      $.ajax(
+        {
+              type: "GET",
+              data: {
+              },
+              url: '@Url.Action("NombreEstaciones", "EstacionesAsignadas")',
+              dataType: "json",
+              contentType: "application/json; charset=utf-8",
+              error: function (jqXHR, exception) {
+
+                  var msg = '';
+                  if (jqXHR.status === 0) {
+                      msg = 'Not connect.\n Verify Network.';
+                  } else if (jqXHR.status == 404) {
+                      msg = 'Requested page not found. [404]';
+                  } else if (jqXHR.status == 500) {
+                      msg = 'Internal Server Error [500].';
+                  } else if (exception === 'parsererror') {
+                      msg = 'Requested JSON parse failed.';
+                  } else if (exception === 'timeout') {
+                      msg = 'Time out error.';
+                  } else if (exception === 'abort') {
+                      msg = 'Ajax request aborted.';
+                  } else {
+                      msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                  }
+                  alert("error");
+                  console.log(msg);
+              },
+
+
+              success: function (data, status, result, lista) {
+            //console.log(data.lista.length())
+            //console.log(Object.values(data));
+            //console.log(lista);
+            //alert(Object.values(data) + "\nStatus: " + status);
+            //console.log(data.length);
+
+
+                  if (data.length > 0) {
+                      var checkBox = '<div class="col-md-8 col-form-label" id="divEstacion">';
+                      checkBox += '<form class="form-inline">';
+                      $.each(data, function (i, Estacion) {
+                          checkBox += '<div class="form-group">'
+                          checkBox += '<div class="custom-control custom-checkbox custom-control-inline">';
+                          checkBox += '<input class="custom-control-input" type="checkbox" value = "' + Estacion.id + '" id = "check' + i + '">';
+                          checkBox += '<label class="custom-control-label" for= "check' + i + '">' + Estacion.nombreEstacion + '</label ></div></div>';
+                      });
+                      checkBox += '</form>';
+                      $('#divEstacion').replaceWith(checkBox);
+                  }
+              }
+          })
+    }
+
+</script>

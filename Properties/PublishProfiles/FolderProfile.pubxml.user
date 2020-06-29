@@ -6,6 +6,11 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git\CitraDS\bin\Release\netcoreapp2.2\publish\</_PublishTargetUrl>
+    <_PublishTargetUrl>bin\Release\netcoreapp2.2\publish\DSC</_PublishTargetUrl>
   </PropertyGroup>
+  <ItemGroup>
+    <File Include="Views/Agrodatos/Graficos.cshtml">
+      <publishTime>06/21/2020 23:25:46</publishTime>
+    </File>
+  </ItemGroup>
 </Project>

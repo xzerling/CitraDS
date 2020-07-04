@@ -201,9 +201,9 @@
 
 
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="select1">Estación</label>
+                        <label class="col-md-3 col-form-label" for="select11">Estación</label>
                         <div class="col-md-9">
-                            <select id="select1" name="select1" class="form-control">
+                            <select id="select11" name="select11" class="form-control">
                                 <option>Selecionar una estación</option>
                                 @foreach (var item in Model)
                                 {
@@ -216,11 +216,11 @@
 
 
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="select2">Datos</label>
+                        <label class="col-md-3 col-form-label" for="select22">Datos</label>
                         <div class="col-md-9">
-                            <select id="select2" name="select2" class="form-control">
+                            <select id="select22" name="select22" class="form-control">
                                 <option value="0">Elegir Opción</option>
-                                <option value="1">Datos cada 15 minutos</option>
+                                <option value="1">Datos Instantaneos</option>
                                 <option value="2">Datos diarios</option>
 
                             </select>
@@ -230,15 +230,15 @@
 
 
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Sensores Disponibles</label>
-                        <div class="col-md-9 col-form-label" id="divSensorType">
-                            <input class="form-control" type="text" placeholder="No se han encontrado sensores" readonly>
-                            <!--Aqui van los checkbox en funcion de la esacion seleccionada
-                            Son llamados en el script-->
+                        <label class="col-md-3 col-form-label">Indicadores Disponibles</label>
+                        <div class="col-md-9 col-form-label" id="divIndicadores">
+                            <form class="form-inline">
+
+                                <input class="form-control" type="text" placeholder="No se han encontrado Indicadores" readonly>
+                                <!--Aqui van los checkbox en funcion de la esacion seleccionada Son llamados en el script-->
+
+                            </form>
                         </div>
-
-
-
 
 
                     </div>
@@ -248,7 +248,7 @@
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="password-inputate-input">Fecha Desde</label>
                         <div class="col-md-9">
-                            <input type="date" id="fecha1" name="fecha1" class="form-control" placeholder="Fecha">
+                            <input type="date" id="fecha11" name="fecha11" class="form-control" placeholder="Fecha">
                             <span class="help-block">Ingresar fecha de inicio</span>
                         </div>
                     </div>
@@ -256,24 +256,24 @@
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="password-inputate-input">Fecha Hasta</label>
                         <div class="col-md-9">
-                            <input type="date" id="fecha2" name="fecha2" class="form-control" placeholder="Fecha">
+                            <input type="date" id="fecha22" name="fecha22" class="form-control" placeholder="Fecha">
                             <span class="help-block">Ingresar fecha de inicio</span>
                         </div>
                     </div>
 
 
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
                         Opciónes Avanzadas
                     </button>
 
-                    <div class="collapse" id="collapseExample">
+                    <div class="collapse" id="collapseExample2">
                         <div class="panel panel-body">
 
 
                             <div class="form-group row">
-                                <label class="col-md-3 col-form-label" for="select3">Separador de Datos</label>
+                                <label class="col-md-3 col-form-label" for="select33">Separador de Datos</label>
                                 <div class="col-md-9">
-                                    <select id="select3" name="select3" class="form-control">
+                                    <select id="select33" name="select33" class="form-control">
                                         <option value="1">Punto y Coma (Excel)</option>
                                         <option value="2">Coma (OpenOffice)</option>
                                         <option value="3">Tabulador</option>
@@ -284,9 +284,9 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-3 col-form-label" for="select4">Separador de decimales</label>
+                                <label class="col-md-3 col-form-label" for="select44">Separador de decimales</label>
                                 <div class="col-md-9">
-                                    <select id="select4" name="select4" class="form-control">
+                                    <select id="select44" name="select44" class="form-control">
                                         <option value="1">Punto (en-US)</option>
                                         <option value="2">Coma (es-CL)</option>
 
@@ -296,9 +296,9 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-3 col-form-label" for="select5">Separador de miles</label>
+                                <label class="col-md-3 col-form-label" for="select55">Separador de miles</label>
                                 <div class="col-md-9">
-                                    <select id="select5" name="select5" class="form-control">
+                                    <select id="select55" name="select55" class="form-control">
                                         <option value="1">Sin separador</option>
                                         <option value="2">Punto</option>
                                         <option value="2">Coma</option>
@@ -309,9 +309,9 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-3 col-form-label" for="select6">Máximo de filas</label>
+                                <label class="col-md-3 col-form-label" for="select66">Máximo de filas</label>
                                 <div class="col-md-9">
-                                    <select id="select6" name="select6" class="form-control">
+                                    <select id="select66" name="select66" class="form-control">
                                         <option value="1">65535 Excel 2003 y OpenOffice</option>
                                         <option value="2">1048576 Excel 2007</option>
                                     </select>
@@ -323,7 +323,7 @@
 
 
                 <div class="panel-footer">
-                    <button type="submit" class="btn btn-success" id="Descargar" onclick="descargarDatos()">
+                    <button type="submit" class="btn btn-success" id="DescargarInd" onclick="descargarIndicadores()">
                         <i class="fa fa-dot-circle-o"></i> Descargar
                     </button>
 
@@ -339,47 +339,35 @@
 <script type="text/javascript">
 
   // Funcion que captura los datos del formulario y envia una consulta a la BD para recuperar los datos en un archivo CSV
-  function descargarDatos() {
-    var estacion = document.getElementById("select1").value;
-    var datos = document.getElementById("select2").value;
-    var fechaI = document.getElementById("fecha1").value;
-    var fechaT = document.getElementById("fecha2").value;
-    var sensores = $('#divSensorType')[0];
+  function descargarIndicadores() {
+      var estacion = document.getElementById("select11").value;
+      var datos = document.getElementById("select22").value;
+      var fechaI = document.getElementById("fecha11").value;
+      var fechaT = document.getElementById("fecha22").value;
+      //var sensores = $('#divIndicadores')[0];
+      var separadorDatos = document.getElementById("select33").value;
+      var separadorDecimales = document.getElementById("select44").value;
+      var separadorMiles = document.getElementById("select55").value;
 
-
-    var separadorDatos = document.getElementById("select3").value;
-    var separadorDecimales = document.getElementById("select4").value;
-    var separadorMiles = document.getElementById("select5").value;
-
-    var childSize = sensores.childNodes.length;
-    console.log("chldSize: " + childSize);
-    var check = [];
-    for (var i = 0; i < childSize; i++)
-    {
-      console.log("ChildValue: " + sensores.childNodes[i].childNodes[0].value);
-      //console.log("asdf: " + sensores.childNodes[i].childNodes[0].checked);
-      if (sensores.childNodes[i].childNodes[0].checked == false) {
-        console.log("ChildValue no sel: " + sensores.childNodes[i].childNodes[0].value);
-        check.push(sensores.childNodes[i].childNodes[0].value);
-      }
-
-      console.log("tamaño arreglo: " + check.length);
-    }
-
-    $.ajax(
+      var eta
+      var gd
+      var hf
+      var eto
+      if (datos == 1) { //datos instantaneos
+          var eta = document.getElementById("check33").checked;
+          $.ajax(
         {
           type: "POST",
-          url: "@Url.Action("EnviarConsulta", "AgroDatos")",
+          url: "@Url.Action("EnviarConsultaIndicadores", "AgroDatos")",
           data: {
             estacion: estacion,
             datos: datos,
             fechaI: fechaI,
             fechaT: fechaT,
+            eta:eta,
             separadorDatos: separadorDatos,
             separadorDecimales: separadorDecimales,
             separadorMiles: separadorMiles,
-            check: check
-
           },
 
           error: function (jqXHR, exception) {
@@ -416,6 +404,167 @@
             console.log("despues de la descarga");
             }
           })
+      }
+      else if (datos == 2) {
+          var gd = document.getElementById("check00").checked;
+          var hf = document.getElementById("check11").checked;
+          var eto = document.getElementById("check22").checked;
+
+          $.ajax(
+        {
+          type: "POST",
+          url: "@Url.Action("EnviarConsultaIndicadores", "AgroDatos")",
+          data: {
+            estacion: estacion,
+            datos: datos,
+            fechaI: fechaI,
+              fechaT: fechaT,
+              gd: gd,
+              hf: hf,
+              eto: eto,
+            separadorDatos: separadorDatos,
+            separadorDecimales: separadorDecimales,
+            separadorMiles: separadorMiles,
+          },
+
+          error: function (jqXHR, exception) {
+            var msg = '';
+            if (jqXHR.status === 0) {
+              msg = 'Not connect.\n Verify Network.';
+            } else if (jqXHR.status == 404) {
+              msg = 'Requested page not found. [404]';
+            } else if (jqXHR.status == 500) {
+              msg = 'Internal Server Error [500].';
+            } else if (exception === 'parsererror') {
+              msg = 'Requested JSON parse failed.';
+            } else if (exception === 'timeout') {
+              msg = 'Time out error.';
+            } else if (exception === 'abort') {
+              msg = 'Ajax request aborted.';
+            } else {
+              msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            }
+            alert("error");
+            console.log(msg);
+          },
+
+          //Crea un link para descargar el archivo CSV generado
+          success:function (data, status) {
+            console.log("success");
+            var contentType = 'text/csv';
+            var blob = new Blob([data], { type: contentType });
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = "test.csv";
+            link.textContent = "Descargar CSV";
+            link.click();
+            console.log("despues de la descarga");
+            }
+          })
+      }
+
+
+
+
+
+      /*
+      var childSize = sensores.childNodes.length;
+      console.log("chldSize: " + childSize);
+      var check = [];
+      for (var i = 0; i < childSize; i++)
+      {
+        console.log("ChildValue: " + sensores.childNodes[i].childNodes[0].value);
+        //console.log("asdf: " + sensores.childNodes[i].childNodes[0].checked);
+        if (sensores.childNodes[i].childNodes[0].checked == false) {
+          console.log("ChildValue no sel: " + sensores.childNodes[i].childNodes[0].value);
+          check.push(sensores.childNodes[i].childNodes[0].value);
+        }
+
+        console.log("tamaño arreglo: " + check.length);
+      }*/
+
+
+    }
+
+
+    function descargarDatos() {
+
+        var estacion = document.getElementById("select1").value;
+        var datos = document.getElementById("select2").value;
+        var fechaI = document.getElementById("fecha1").value;
+        var fechaT = document.getElementById("fecha2").value;
+        var sensores = $('#divSensorType')[0];
+
+
+        var separadorDatos = document.getElementById("select3").value;
+        var separadorDecimales = document.getElementById("select4").value;
+        var separadorMiles = document.getElementById("select5").value;
+
+        var childSize = sensores.childNodes.length;
+        console.log("chldSize: " + childSize);
+        var check = [];
+        for (var i = 0; i < childSize; i++)
+        {
+          console.log("ChildValue: " + sensores.childNodes[i].childNodes[0].value);
+          //console.log("asdf: " + sensores.childNodes[i].childNodes[0].checked);
+          if (sensores.childNodes[i].childNodes[0].checked == false) {
+            console.log("ChildValue no sel: " + sensores.childNodes[i].childNodes[0].value);
+            check.push(sensores.childNodes[i].childNodes[0].value);
+          }
+
+          console.log("tamaño arreglo: " + check.length);
+        }
+
+        $.ajax(
+            {
+              type: "POST",
+              url: "@Url.Action("EnviarConsulta", "AgroDatos")",
+              data: {
+                estacion: estacion,
+                datos: datos,
+                fechaI: fechaI,
+                fechaT: fechaT,
+                separadorDatos: separadorDatos,
+                separadorDecimales: separadorDecimales,
+                separadorMiles: separadorMiles,
+                check: check
+
+              },
+
+              error: function (jqXHR, exception) {
+                var msg = '';
+                if (jqXHR.status === 0) {
+                  msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                  msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                  msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                  msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                  msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                  msg = 'Ajax request aborted.';
+                } else {
+                  msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+                alert("error");
+                console.log(msg);
+              },
+
+              //Crea un link para descargar el archivo CSV generado
+              success:function (data, status) {
+                console.log("success");
+                var contentType = 'text/csv';
+                var blob = new Blob([data], { type: contentType });
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = "test.csv";
+                link.textContent = "Descargar CSV";
+                link.click();
+                console.log("despues de la descarga");
+                }
+              })
 
   }
 </script>
@@ -437,6 +586,7 @@
 
 
 
+
     console.log("Estacion: " + estacion);
     console.log("Datos: " + datos);
     console.log("Inicio: " + fechaI);
@@ -455,7 +605,49 @@
     console.log("maxFila: " + maxFilas);
 
 
-  }
+    }
+
+    $('#select22').change(function () {
+
+        var select2Value = document.getElementById("select22").value;
+        if (select2Value == 2) {
+
+            var indicadores = '<div class="col-md-9 col-form-label" id="divIndicadores">' +
+                '<form class="form-inline">' +
+                '<div class="form-group"><div class="custom-control custom-checkbox custom-control-inline">' +
+                '<input class="custom-control-input" type="checkbox" value="0" id="check00">' +
+                '<label class="custom-control-label" for="check00">Grados Dia</label></div></div>' +
+                '<div class="form-group">' +
+                '<div class="custom-control custom-checkbox custom-control-inline">' +
+                '<input class="custom-control-input" type="checkbox" value="1" id="check11">' +
+                '<label class="custom-control-label" for="check11">Horas Frio</label></div></div>' +
+                '<div class="form-group">' +
+                '<div class="custom-control custom-checkbox custom-control-inline">' +
+                '<input class="custom-control-input" type="checkbox" value="2" id="check22">' +
+                '<label class="custom-control-label" for="check22">Et Diario(Et0)</label></div></div></form></div>';
+
+        }
+        else if (select2Value == 1) {
+
+            var indicadores = '<div class="col-md-9 col-form-label" id="divIndicadores">' +
+                '<form class="form-inline">' +
+                '<div class="form-group"><div class="custom-control custom-checkbox custom-control-inline">' +
+                '<div class="form-group">' +
+                '<div class="custom-control custom-checkbox custom-control-inline">' +
+                '<input class="custom-control-input" type="checkbox" value="3" id="check33">' +
+                '<label class="custom-control-label" for="check33">Et Instantaneo(Eta)</label></div></div></form></div>';
+            
+        }
+        else
+        {
+            var indicadores = '<div class="col-md-9 col-form-label" id="divIndicadores">' +
+                '<form class="form-inline">' +
+                '<input class="form-control" type="text" placeholder="No se han encontrado Indicadores" readonly></form></div>';
+
+        }
+        $('#divIndicadores').replaceWith(indicadores);
+
+    });
 
 
 

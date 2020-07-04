@@ -118,12 +118,13 @@ namespace CitraDataStore.Controllers
             return _context.Admins.Any(e => e.Id == id);
         }
 
+        /*
         [HttpGet]
         public JsonResult NombreEstaciones()
         {
             //SensoresContext context = HttpContext.RequestServices.GetService(typeof(CitraDataStore.SensoresContext)) as SensoresContext;
-            List<Agrodatos> lista = context.GetStations();
-            return Json(lista);
-        }
+            //List<Agrodatos> lista = context.GetStations();
+            //return Json(lista);
+        }*/
     }
 }

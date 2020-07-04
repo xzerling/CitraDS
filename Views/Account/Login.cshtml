@@ -79,35 +79,37 @@
 
     <script>
         function Validate() {
-
             console.log("sctipt de login");
+            $.ajax(
+            {
+                type: "POST",
+                url: '@Url.Action("Validate", "Account")',
+                data: {
+                email: $('#email').val(),
+                password: $('#password').val()
+                },
+                error: function (result) {
+                alert("There is a Problem, Try Again!", result.message);
+                },
+                success: function (result) {
 
-        $.ajax(
-        {
-          type: "POST",
-          url: '@Url.Action("Validate", "Account")',
-          data: {
-            email: $('#email').val(),
-            password: $('#password').val()
-          },
-          error: function (result) {
-            alert("There is a Problem, Try Again!");
-          },
-          success: function (result) {
-              console.log(result);
-              //console.log("esperando 3 seg");
-              //sleep(3000);
-              //console.log("ya esperó")
-              if (result.status == true) {
-                  console.log("esperando 3 para la redireccion seg");
-                  //sleep(3000);
-              window.location.href = '@Url.Action("Index", "Agrodatos")';
-            }
-            else {
-              alert(result.message);
-            }
-          }
-        });
+                    alert(result.message);
+                    console.log(result);
+                    //console.log("esperando 3 seg");
+                    //sleep(3000);
+                    //console.log("ya esperó")
+                    if (result.status == true) {
+
+                        console.log("esperando 3 para la redireccion seg");
+                        //sleep(3000);
+                        window.location.href = '@Url.Action("Index", "Home")';
+                    }
+                    else
+                    {
+                        alert(result.message);
+                    }
+                }
+            });
         }
         /*
         function sleep(milliseconds) {

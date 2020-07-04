@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Xml;
 using System.Globalization;
 using CitraDataStore.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace CitraDataStore.Controllers
 {
@@ -14,18 +15,19 @@ namespace CitraDataStore.Controllers
     {
         readonly SensoresContext context = new SensoresContext();
 
-        
+
 
         public IActionResult Index()
         {
-            
-            List<Agrodatos> lista = context.GetStations();
+
+            int id = HttpContext.Session.GetInt32("id").GetValueOrDefault();
+            List<Agrodatos> lista = context.GetStations(id);
             return View(lista);
         }
 
         public IActionResult Graficos()
         {
-            List<Agrodatos> lista = context.GetPira();
+            List<Agrodatos> lista = context.GetPiraStations();
             return View(lista);
         }
 
@@ -78,6 +80,50 @@ namespace CitraDataStore.Controllers
                     csv.AppendLine(resultado.ElementAt(i).fecha.Replace(" 0:00:00", "") + "\t" + resultado.ElementAt(i).hora + "\t" + resultado.ElementAt(i).datos.Replace('|', '\t'));
                 }
             }
+
+
+            return File(System.Text.Encoding.ASCII.GetBytes(csv.ToString()), "text/csv", "data.csv");
+            //return resultado;
+        }
+
+        [HttpPost]
+        public IActionResult EnviarConsultaIndicadores(int estacion, int datos, string fechaI, string fechaT, int separadorDatos, bool gd, bool hf, bool eto, bool eta,
+        int separadorDecimales, int separadorMiles, int[] check)
+        {
+            //SensoresContext context = HttpContext.RequestServices.GetService(typeof(CitraDataStore.SensoresContext)) as SensoresContext;
+            List<Report> resultado = context.SendIndicatorRquest(estacion, datos, fechaI, fechaT, separadorDecimales, gd, hf, eto, eta);
+
+            StringBuilder csv = new StringBuilder();
+
+            char separador = ';';
+            if(separadorDatos == 1)
+            {
+                separador = ';';
+            }
+            else if(separadorDatos == 2)
+            {
+                separador = ',';
+            }
+            else if(separadorDatos == 3)
+            {
+                separador = '\t';
+            }
+
+            if(datos==2)
+            {
+                for (int i = 0; i < resultado.Count; i++)
+                {
+                    csv.AppendLine(resultado.ElementAt(i).fecha.Replace(" 0:00:00", "") + separador + resultado.ElementAt(i).datos.Replace('|', separador));
+                }
+            }
+            else if(datos == 1)
+            {
+                for (int i = 0; i < resultado.Count; i++)
+                {
+                    csv.AppendLine(resultado.ElementAt(i).fecha.Replace(" 0:00:00", "") + separador + resultado.ElementAt(i).hora+":00:00" +separador+ resultado.ElementAt(i).datos);
+                }
+            }
+
 
 
             return File(System.Text.Encoding.ASCII.GetBytes(csv.ToString()), "text/csv", "data.csv");

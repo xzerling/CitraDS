@@ -15,7 +15,7 @@ namespace CitraDataStore.Controllers
 {
     public class AccountController : Controller
     {
-        MyDbContext db = new MyDbContext();
+        readonly MyDbContext db = new MyDbContext();
 
         public IActionResult Login()
         {
@@ -25,15 +25,17 @@ namespace CitraDataStore.Controllers
         public ActionResult Validate(Admins admin)
         {
             var _admin = db.Admins.Where(s => s.Email == admin.Email).FirstOrDefault();
+
             if (_admin != null)
             {
                 if (_admin.Password == admin.Password)
                 {
-                    HttpContext.Session.SetString("email", _admin.Email);
+                    //HttpContext.Session.SetString("email", _admin.Email);
+                    HttpContext.Session.SetString("email", admin.Email);
                     HttpContext.Session.SetInt32("id", _admin.Id);
                     HttpContext.Session.SetInt32("role_id", (int)_admin.RolesId);
                     HttpContext.Session.SetString("name", _admin.FullName);
-
+                    HttpContext.Session.SetString("id_estaciones_asignadas", _admin.IdEstacionesAsignadas);
                     int roleId = (int)HttpContext.Session.GetInt32("role_id");
                     List<Menus> menus = db.LinkRolesMenus.Where(s => s.RolesId == roleId).Select(s => s.Menus).ToList();
 

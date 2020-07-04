@@ -10,9 +10,13 @@ namespace CitraDataStore.Models
 {
     public class Agrodatos
     {
+
+        
+
         public string NombreEstacion { get; set; }
         public int Id { get; set; }
         public string NombreSensor { get; set; }
+
 
     }
 

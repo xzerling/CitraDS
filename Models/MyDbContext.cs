@@ -57,6 +57,10 @@ namespace CitraDataStore.Models
                 entity.Property(e => e.Password)
                     .HasColumnName("password")
                     .HasColumnType("varchar(255)");
+               
+                entity.Property(e => e.IdEstacionesAsignadas)
+                    .HasColumnName("id_estaciones_asignadas")
+                    .HasColumnType("varchar(999)");
 
                 entity.Property(e => e.RolesId)
                     .HasColumnName("roles_id")

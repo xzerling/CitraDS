@@ -1,0 +1,25 @@
+{
+  "name": "citrads",
+  "version": "1.0.0",
+  "description": "Citra Data Store",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xzerling/CitraDS.git"
+  },
+  "author": "Alvaro Elgueda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xzerling/CitraDS/issues"
+  },
+  "homepage": "https://github.com/xzerling/CitraDS#readme",
+  "dependencies": {
+    "chart.js": "^2.9.3",
+    "chartjs-plugin-zoom": "^0.7.7",
+    "geoblaze": "^0.2.5",
+    "proj4": "^2.6.2"
+  }
+}

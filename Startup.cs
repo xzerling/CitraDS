@@ -36,7 +36,14 @@ namespace CitraDataStore
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddMemoryCache();
-            services.AddSession();
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".AdventureWorks.Session";
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.IsEssential = true;
+            }
+            );
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
@@ -55,13 +62,13 @@ namespace CitraDataStore
             }
 
             app.UseHttpsRedirection();
-
+            /*
             app.UseFileServer(new FileServerOptions()
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "node_modules")),
                 RequestPath = new PathString("/npmlib"),
                 EnableDirectoryBrowsing = true
-            });
+            });*/
 
             app.UseStaticFiles();
             app.UseCookiePolicy();

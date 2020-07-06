@@ -31,7 +31,14 @@ namespace CitraDataStore.Controllers
                 if (_admin.Password == admin.Password)
                 {
                     //HttpContext.Session.SetString("email", _admin.Email);
-                    HttpContext.Session.SetString("email", admin.Email);
+                    try
+                    {
+                        HttpContext.Session.SetString("email", admin.Email);
+                    }
+                    catch(Exception ex)
+                    {
+                        throw ex;
+                    }
                     HttpContext.Session.SetInt32("id", _admin.Id);
                     HttpContext.Session.SetInt32("role_id", (int)_admin.RolesId);
                     HttpContext.Session.SetString("name", _admin.FullName);
@@ -49,7 +56,7 @@ namespace CitraDataStore.Controllers
                     HttpContext.Session.SetString("menuString", menuString);
                     HttpContext.Session.SetString("menus", JsonConvert.SerializeObject(menus));
 
-                    return Json(new { status = true, message = "Login Successfull!" });
+                    return Json(new { status = true, message = "Login Successfull!", context = HttpContext.Session.GetString("email"), context2 = _admin.FullName });
                 }
                 else
                 {

@@ -78,7 +78,7 @@
 
     window.onload = getStationsNames;
 
-    function getCkeckbox() {
+    async function getCkeckbox() {
         var sensores = $('#divEstacion')[0];
 
         var childSize = sensores.childNodes[0].length;
@@ -89,14 +89,14 @@
             //console.log("asdf: " + sensores.childNodes[i].childNodes[0].checked);
             if (sensores.childNodes[0].childNodes[i].childNodes[0].childNodes[0].checked == true) {
                 console.log("ChildValue no sel: " + sensores.childNodes[0].childNodes[i].childNodes[0].childNodes[0].value);
-                check = ","+check + sensores.childNodes[0].childNodes[i].childNodes[0].childNodes[0].value;
+                check = check +","+ await sensores.childNodes[0].childNodes[i].childNodes[0].childNodes[0].value;
             }
 
             console.log("tamaño arreglo: " + check);
         }
         //$('#')
         $('#IdEstacionesAsignadas')[0].value = check;
-        return check;
+        //return check;
     }
 
 

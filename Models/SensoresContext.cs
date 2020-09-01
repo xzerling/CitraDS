@@ -33,7 +33,7 @@ namespace CitraDataStore
 
             using (MySqlConnection conn = GetDefaultConn())
             {
-
+                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT nombre, id FROM estacioneve", conn);
 
                 using (MySqlDataReader reader = cmd.ExecuteReader())

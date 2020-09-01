@@ -30,43 +30,49 @@
                                 <th>Nombre</th>
                                 <th>Email</th>
                                 <th>Rol</th>
-                                <th>Estacion</th>
+                                <!--
+                               <th>Estacion</th>
+    -->
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (Admins admins in Model.Admins)
                             {
-                                <tr>
-                                    <td>
-                                        <input type="hidden" id="@admins.Id" value="@admins.Id" readonly>
-                                        @admins.Id
-                                    </td>
-                                    <td>
-                                        @admins.FullName
-                                    </td>
-                                    <td>
-                                        @admins.Email
-                                    </td>
-                                    <td>
-                                        @admins.Roles.Title
-                                    </td>
-                                    <td>
-                                        <select id="@admins.Id" name="@admins.Id" class="form-control">
-                                            <option>Selecionar una estación</option>
-                                            @foreach (Estacioneve agrodatos in Model.Agrodatos)
-                                            {
-                                                <option value=@agrodatos.Id> @agrodatos.Nombre</option>
+                            <tr>
+                                <td>
+                                    <input type="hidden" id="@admins.Id" value="@admins.Id" readonly>
+                                    @admins.Id
+                                </td>
+                                <td>
+                                    @admins.FullName
+                                </td>
+                                <td>
+                                    @admins.Email
+                                </td>
+                                <td>
+                                    @admins.Roles.Title
+                                </td>
 
-                                            }b 
-                                        </select>
-                                        <button type="submit" class="btn btn-success" id="Asignar" onclick="obtenerDatos(@admins.Id)">Asignar</button>
-                                    </td>
-                                    <td>
-                                        <a href="/Admins/Edit/@admins.Id">Editar</a> |
-                                        <a href="/Admins/Delete/@admins.Id">Borrar</a>
-                                    </td>
-                                </tr>
+                                <!-- Asignar Estacion
+    <td>
+        <select id="@admins.Id" name="@admins.Id" class="form-control">
+            <option>Selecionar una estación</option>
+            @foreach (Estacioneve agrodatos in Model.Agrodatos)
+            {
+                <option value=@agrodatos.Id> @agrodatos.Nombre</option>
+
+            }
+        </select>
+        <button type="submit" class="btn btn-success" id="Asignar" onclick="obtenerDatos(@admins.Id)">Asignar</button>
+    </td>
+
+     -->
+                                <td>
+                                    <a href="/Admins/Edit/@admins.Id">Editar</a> |
+                                    <a href="/Admins/Delete/@admins.Id">Borrar</a>
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>

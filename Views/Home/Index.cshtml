@@ -375,6 +375,10 @@
             var transform = newfeat.getGeometry().transform('EPSG:3857', "EPSG:32719");
             var coord = newfeat.getGeometry().getCoordinates();
 
+            var workspace = layer.params.LAYERS.split(':');
+            var downloadurl = "http://localhost:8080/geoserver/" + workspace[0] + "/wcs?service=WCS&version=2.0.1&request=GetCoverage&CoverageId=" + layer.params.LAYERS + "&format=image/tiff"
+            window.open(downloadurl);
+
 
             console.log("poligono: " + coord);
             //coord = ol.proj.transform(coord, 'EPSG:32719', 'EPSG:4326');

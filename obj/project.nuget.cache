@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "oFu90NOcDQxVg/hfoAOiFS5myugbYJjVyHRNdvlwZPFNi621Z+cuZ5dbDB7XYMka7uV4ocfu7U2OVB0HF4lwEg==",
+  "dgSpecHash": "JWOzVn8u4OUR+SHvyGC7o0xPtv0D203uoS4oPMEwAbsv1p1VaqdJ9+qYdCYop1mk6jSJxriM/OHhjdMTcxXwoQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Zerling\\Documents\\UTAL\\2020-1\\Citra\\New\\Git2\\CitraDS\\CitraDataStore.csproj",
   "expectedPackageFiles": [
@@ -176,6 +176,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.dotnethostresolver\\2.2.0\\microsoft.netcore.dotnethostresolver.2.2.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\2.2.0\\microsoft.netcore.platforms.2.2.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.targets\\2.0.0\\microsoft.netcore.targets.2.0.0.nupkg.sha512",
+    "C:\\Users\\Zerling\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.8\\microsoft.visualstudio.azure.containers.tools.targets.1.10.8.nupkg.sha512",
     "C:\\Users\\Zerling\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration\\2.2.4\\microsoft.visualstudio.web.codegeneration.2.2.4.nupkg.sha512",
     "C:\\Users\\Zerling\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.contracts\\2.2.4\\microsoft.visualstudio.web.codegeneration.contracts.2.2.4.nupkg.sha512",
     "C:\\Users\\Zerling\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.core\\2.2.4\\microsoft.visualstudio.web.codegeneration.core.2.2.4.nupkg.sha512",

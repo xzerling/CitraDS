@@ -16,7 +16,7 @@ namespace CitraDataStore.Controllers
         readonly SensoresContext context = new SensoresContext();
 
 
-
+        [AuthorizedAction]
         public IActionResult Index()
         {
 

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Zerling\\Documents\\UTAL\\2020-1\\Citra\\New\\Git2\\CitraDS\\CitraDataStore.csproj": {}
+    "C:\\Users\\pfuen\\Documents\\GitKrakenRepo\\CitraDS\\CitraDataStore.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Zerling\\Documents\\UTAL\\2020-1\\Citra\\New\\Git2\\CitraDS\\CitraDataStore.csproj": {
+    "C:\\Users\\pfuen\\Documents\\GitKrakenRepo\\CitraDS\\CitraDataStore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Zerling\\Documents\\UTAL\\2020-1\\Citra\\New\\Git2\\CitraDS\\CitraDataStore.csproj",
+        "projectUniqueName": "C:\\Users\\pfuen\\Documents\\GitKrakenRepo\\CitraDS\\CitraDataStore.csproj",
         "projectName": "CitraDataStore",
-        "projectPath": "C:\\Users\\Zerling\\Documents\\UTAL\\2020-1\\Citra\\New\\Git2\\CitraDS\\CitraDataStore.csproj",
-        "packagesPath": "C:\\Users\\Zerling\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Zerling\\Documents\\UTAL\\2020-1\\Citra\\New\\Git2\\CitraDS\\obj\\",
+        "projectPath": "C:\\Users\\pfuen\\Documents\\GitKrakenRepo\\CitraDS\\CitraDataStore.csproj",
+        "packagesPath": "C:\\Users\\pfuen\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pfuen\\Documents\\GitKrakenRepo\\CitraDS\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Zerling\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pfuen\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -81,7 +81,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

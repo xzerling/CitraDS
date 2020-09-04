@@ -173,22 +173,22 @@ iframe {
   z-index: 1;
 }
 
-.container-login100::before {
-  content: "";
-  display: block;
-  position: absolute;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: #ffffff;
-  background: -webkit-linear-gradient(bottom, #ffffff, #00c6fb);
-  background: -o-linear-gradient(bottom, #ffffff, #00c6fb);
-  background: -moz-linear-gradient(bottom, #ffffff, #00c6fb);
-  background: linear-gradient(bottom, #ffffff, #00c6fb);
-  opacity: 0.5;
-}
+	.container-login100::before {
+		content: "";
+		display: block;
+		position: absolute;
+		z-index: -1;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		background: #005bea;
+		background: -webkit-linear-gradient(bottom, #ffcc01c2, #00c6fb);
+		background: -o-linear-gradient(bottom, #ffcc01c2, #00c6fb);
+		background: -moz-linear-gradient(bottom, #ffcc01c2, #00c6fb);
+		background: linear-gradient(bottom, #ffcc01c2, #00c6fb);
+		opacity: 0.35;
+	}
 
 .wrap-login100 {
   width: 390px;

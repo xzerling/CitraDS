@@ -50,7 +50,7 @@
 
         <div class="panel-body">
 
-            <canvas id="line-chart" width="800" height="450"></canvas>
+            <canvas id="line-chart" width="600" height="350"></canvas>
 
         </div>
 
@@ -61,6 +61,69 @@
 
 
 <script>
+
+
+    var ctx_live = document.getElementById("line-chart");
+
+    var chart = new Chart(ctx_live, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                data: [],
+                label: "Rad W/m2",
+                fill: true,
+                backgroundColor: 'rgba(0, 119, 204, 0.3)'
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Valor de Radiacion Medido por piranometro al mediodia'
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: 1200,
+                        stepSize: 200,
+                        beginAtZero: true
+                    }
+                }]
+            },
+            plugins: {
+                zoom: {
+                    // Container for pan options
+                    pan: {
+                        // Boolean to enable panning
+                        enabled: true,
+
+                        // Panning directions. Remove the appropriate direction to disable
+                        // Eg. 'y' would only allow panning in the y direction
+                        mode: 'x'
+                    },
+
+                    // Container for zoom options
+                    zoom: {
+                        // Boolean to enable zooming
+                        enabled: true,
+
+                        // Zooming directions. Remove the appropriate direction to disable
+                        // Eg. 'y' would only allow zooming in the y direction
+                        mode: 'x',
+                    }
+                }
+            }
+        }
+    });
+
+
+
     function dibujarGrafico() {
         console.log("holamundo");
 
@@ -68,173 +131,129 @@
         var fechaI = document.getElementById("fechaI").value;
         var fechaT = document.getElementById("fechaT").value;
 
-        var fecha1 = moment(fechaI);
-        var fecha2 = moment(fechaT);
-
-        var diasEntreFechas = fecha2.diff(fecha1, 'days');
-
-        
+        if (fechaI != "" && fechaT != "") {
 
 
-        console.log("comparar fechas", fechaI > fechaT)
-        if (fechaI > fechaT) {
-            alert("Fecha de Termino es anterior a la de Inicio");
-        }
-        else {
+            var fecha1 = moment(fechaI);
+            var fecha2 = moment(fechaT);
 
-            getSensorNames(estacion, fechaI, fechaT);
-            function getSensorNames(estacion, fechaI, fechaT) {
-
-                console.log("funcion y el id: " + estacion, fechaI, fechaT);
-                $.ajax(
-                    {
-                        type: "GET",
-                        url: '@Url.Action("ValorPiranometro", "AgroDatos")',
-                        data: {
-                            estacion: estacion,
-                            fechaI: fechaI,
-                            fechaT: fechaT
-                        },
-                        dataType: "json",
-                        contentType: "application/json; charset=utf-8",
-                        error: function (jqXHR, exception) {
-                            var msg = '';
-                            if (jqXHR.status === 0) {
-                                msg = 'Not connect.\n Verify Network.';
-                            } else if (jqXHR.status == 404) {
-                                msg = 'Requested page not found. [404]';
-                            } else if (jqXHR.status == 500) {
-                                msg = 'Internal Server Error [500].';
-                            } else if (exception === 'parsererror') {
-                                msg = 'Requested JSON parse failed.';
-                            } else if (exception === 'timeout') {
-                                msg = 'Time out error.';
-                            } else if (exception === 'abort') {
-                                msg = 'Ajax request aborted.';
-                            } else {
-                                msg = 'Uncaught Error.\n' + jqXHR.responseText;
-                            }
-                            alert("error");
-                            console.log(msg);
-                        },
+            var diasEntreFechas = fecha2.diff(fecha1, 'days');
 
 
-                        success: function (data, status, result, lista) {
-                            //console.log("length de los datos: ", data.datos.length());
-                            console.log("objetcta.values(data)", Object.values(data));
-                            console.log("cantidad de entradas: ", Object.values(data).length);
-                            //console.log("data: ", data[0].fecha)
 
 
-                            var labels = data.map(function (e) {
-                                return e.fecha;
-                            });
-                            var datos = data.map(function (e) {
-                                return e.valor;
-                            });
+            console.log("comparar fechas", fechaI > fechaT)
+            if (fechaI > fechaT) {
+                alert("Fecha de Termino es anterior a la de Inicio");
+            }
+            else {
 
-
-                            for (var i = 0; i < labels.length; i++) {
-                                //make sure we are not checking the last date in the labels array
-                                if (i + 1 < labels.length) {
-                                    var date1 = moment(labels[i], "DD-MM-YYYY");
-                                    var date2 = moment(labels[i + 1], "DD-MM-YYYY");
-
-
-                                    //if the current date +1 is not the same as it's next neighbor we have to add in a new one
-                                    if (!date1.add(1, "days").isSame(date2)) {
-
-                                        //add the label
-                                        labels.splice(i + 1, 0, date1.format("DD-MM-YYYY"));
-                                        //add the data
-                                        datos.splice(i + 1, 0, 0);
-                                    }
+                getSensorNames(estacion, fechaI, fechaT);
+                function getSensorNames(estacion, fechaI, fechaT) {
+                    console.log("funcion y el id: " + estacion, fechaI, fechaT);
+                    $.ajax(
+                        {
+                            type: "GET",
+                            url: '@Url.Action("ValorPiranometro", "AgroDatos")',
+                            data: {
+                                estacion: estacion,
+                                fechaI: fechaI,
+                                fechaT: fechaT
+                            },
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            error: function (jqXHR, exception) {
+                                var msg = '';
+                                if (jqXHR.status === 0) {
+                                    msg = 'Not connect.\n Verify Network.';
+                                } else if (jqXHR.status == 404) {
+                                    msg = 'Requested page not found. [404]';
+                                } else if (jqXHR.status == 500) {
+                                    msg = 'Internal Server Error [500].';
+                                } else if (exception === 'parsererror') {
+                                    msg = 'Requested JSON parse failed.';
+                                } else if (exception === 'timeout') {
+                                    msg = 'Time out error.';
+                                } else if (exception === 'abort') {
+                                    msg = 'Ajax request aborted.';
+                                } else {
+                                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
                                 }
-                            }
+                                alert("error");
+                                console.log(msg);
+                            },
+                            success: function (data, status, result, lista) {
+                                //console.log("length de los datos: ", data.datos.length());
+                                console.log("objetcta.values(data)", Object.values(data));
+                                console.log("cantidad de entradas: ", Object.values(data).length);
+                                //console.log("data: ", data[0].fecha)
 
 
-                            new Chart(document.getElementById("line-chart"), {
-                                type: 'line',
-                                data: {
-                                    labels: labels,
-                                    datasets: [{
-                                        data: datos,
-                                        label: "Rad W/m2",
-                                        fill: true,
-                                        backgroundColor: 'rgba(0, 119, 204, 0.3)'
-                                    }]
-                                },
+                                var labels = data.map(function (e) {
+                                    return e.fecha;
+                                });
+                                var datos = data.map(function (e) {
+                                    return e.valor;
+                                });
 
-                                options: {
-                                    title: {
-                                        display: true,
-                                        text: 'Valor de Radiacion Medido por piranometro al mediodia'
-                                    },
-                                    scales: {
-                                        xAxes: [{
-                                            ticks: {
-                                                beginAtZero: true
-                                            }
-                                        }],
-                                        yAxes: [{
-                                            ticks: {
-                                                beginAtZero: true
-                                            }
-                                        }]
-                                    },
-                                    plugins: {
-                                        zoom: {
-                                            // Container for pan options
-                                            pan: {
-                                                // Boolean to enable panning
-                                                enabled: true,
+                                for (var i = 0; i < labels.length; i++) {
+                                    //make sure we are not checking the last date in the labels array
+                                    if (i + 1 < labels.length) {
+                                        var date1 = moment(labels[i], "DD-MM-YYYY");
+                                        var date2 = moment(labels[i + 1], "DD-MM-YYYY");
 
-                                                // Panning directions. Remove the appropriate direction to disable
-                                                // Eg. 'y' would only allow panning in the y direction
-                                                mode: 'x'
-                                            },
 
-                                            // Container for zoom options
-                                            zoom: {
-                                                // Boolean to enable zooming
-                                                enabled: true,
+                                        //if the current date +1 is not the same as it's next neighbor we have to add in a new one
+                                        if (!date1.add(1, "days").isSame(date2)) {
 
-                                                // Zooming directions. Remove the appropriate direction to disable
-                                                // Eg. 'y' would only allow zooming in the y direction
-                                                mode: 'x',
-                                            }
+                                            //add the label
+                                            labels.splice(i + 1, 0, date1.format("DD-MM-YYYY"));
+                                            //add the data
+                                            datos.splice(i + 1, 0, 0);
                                         }
                                     }
                                 }
-                            });
 
-                            if (diasEntreFechas + 1 != Object.values(data).length) {
-                                var diferencia = (diasEntreFechas + 1) - Object.values(data).length
-                                Swal.fire({
-                                    icon: 'warning',
-                                    title: 'Datos incompletos',
-                                    text: 'Hay perdida de ' +diferencia+' '+' datos en el intervalo de fechas',
-                                    footer: 'Pruebe con un nuevo intervalo o comuniquese con el Admin.'
-                                })
-                                console.log("Dias entre fecha: ", diasEntreFechas, "cantidad de entradas: ", Object.values(data).length)
+                                //Actualizacion del grafico
+                                chart.data.labels = labels;
+                                chart.data.datasets[0].data = datos;
+                                chart.update();
+
+
+                                //Alertas de los datos obtenidos
+                                if (diasEntreFechas + 1 != Object.values(data).length) {
+                                    var diferencia = (diasEntreFechas + 1) - Object.values(data).length
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Datos incompletos',
+                                        text: 'Hay perdida de ' +diferencia+' '+' datos en el intervalo de fechas',
+                                        footer: 'Pruebe con un nuevo intervalo o comuniquese con el Admin.'
+                                    })
+                                    console.log("Dias entre fecha: ", diasEntreFechas, "cantidad de entradas: ", Object.values(data).length)
+                                }
+                                else {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Datos completos',
+                                        text: 'Todos los datos del intervalo estan disponibles.'
+                                    })
+                                    console.log("Dias entre fecha: ", diasEntreFechas, "cantidad de entradas: ", Object.values(data).length)
+                                }
+                                //alert(Object.values(data) + "\nStatus: " + status);
+                                //console.log(data.length);
                             }
-                            else {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Datos completos',
-                                    text: 'Todos los datos del intervalo estan disponibles.'
-                                })
-                                console.log("Dias entre fecha: ", diasEntreFechas, "cantidad de entradas: ", Object.values(data).length)
-                            }
-                            //alert(Object.values(data) + "\nStatus: " + status);
-                            //console.log(data.length);
-                        }
-                    } )
+                        } )
             }
         }
 
-
-
+        }
+        else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Fechas Nulas',
+                text: 'Debe ingresar una fecha de inicio y de termino.'
+            })
+        }
 
     }
 

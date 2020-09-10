@@ -37,11 +37,11 @@
 
             </select>
 
+            <span>Ingresar fecha de inicio</span>
             <input type="date" id="fechaI" name="fechaI" class="form-control" placeholder="Fecha de inicio">
-            <span class="help-block">Ingresar fecha de inicio</span>
 
+            <span>Ingresar fecha de Termino</span>
             <input type="date" id="fechaT" name="fechaT" class="form-control" placeholder="Fecha de Termino">
-            <span class="help-block">Ingresar fecha de Termino</span>
 
             <button type="submit" class="btn btn-success" id="graficar" onclick="dibujarGrafico()">
                 <i class="fa fa-dot-circle-o"></i> Graficar
@@ -50,7 +50,7 @@
 
         <div class="panel-body">
 
-            <canvas id="line-chart" width="600" height="350"></canvas>
+            <canvas id="line-chart" width="600" height="300"></canvas>
 
         </div>
 
@@ -60,6 +60,10 @@
 </html>
 
 
+
+
+
+/*
 <script>
 
 
@@ -79,19 +83,28 @@
         options: {
             title: {
                 display: true,
-                text: 'Valor de Radiacion Medido por piranometro al mediodia'
+                text: 'Valor de Radiacion Medido por piranometro al mediodia',
+                fontSize: 16
+            },
+            legend: {
+                position: 'left'
             },
             scales: {
                 xAxes: [{
                     ticks: {
                         beginAtZero: true
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'DOY',
+                        fontSize: 16
                     }
                 }],
                 yAxes: [{
                     ticks: {
                         min: 0,
                         max: 1200,
-                        stepSize: 200,
+                        stepSize: 300,
                         beginAtZero: true
                     }
                 }]
@@ -137,6 +150,8 @@
             var fecha1 = moment(fechaI);
             var fecha2 = moment(fechaT);
 
+            console.log("doy: ", fecha1.dayOfYear());
+
             var diasEntreFechas = fecha2.diff(fecha1, 'days');
 
 
@@ -144,7 +159,11 @@
 
             console.log("comparar fechas", fechaI > fechaT)
             if (fechaI > fechaT) {
-                alert("Fecha de Termino es anterior a la de Inicio");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Fechas Nulas',
+                    text: 'Fecha de termino es anterior a la de inicio.'
+                })
             }
             else {
 
@@ -196,23 +215,55 @@
                                     return e.valor;
                                 });
 
-                                for (var i = 0; i < labels.length; i++) {
+                                for (var i = 0; i < diasEntreFechas + 1; i++) {
                                     //make sure we are not checking the last date in the labels array
                                     if (i + 1 < labels.length) {
                                         var date1 = moment(labels[i], "DD-MM-YYYY");
                                         var date2 = moment(labels[i + 1], "DD-MM-YYYY");
+                                        var lastDate = fecha2;
+                                        console.log("tamaño de labels1: " + labels.length);
 
+
+                                        var d1 = new Date(fecha1);
+                                        var dn = new Date(lastDate);
+                                        var d2 = new Date(fecha1 + ((24 * 60 * 60 * 1000) * (i + 1)));
+                                        console.log("d1: " + d1);
+                                        console.log("d2: " + d2);
 
                                         //if the current date +1 is not the same as it's next neighbor we have to add in a new one
-                                        if (!date1.add(1, "days").isSame(date2)) {
+                                        if (!date1.add(1, "days").isSameOrAfter(date2)) {
 
+                                            console.log("te digo que esta fecha")
+                                            console.log(date1);
+                                            console.log("no es igual a");
+                                            console.log(date2);
+                                            //var indice = i + 1;
+                                            //console.log("fecha agregada: " + date1.toString() + " indice: " + indice);
                                             //add the label
                                             labels.splice(i + 1, 0, date1.format("DD-MM-YYYY"));
                                             //add the data
-                                            datos.splice(i + 1, 0, 0);
+                                            datos.splice(i + 1, 0, null);
+                                            //console.log("tamaño de labels2: " + labels.length);
+                                        }
+                                        else if (d2 < dn) {
+                                            console.log("fecha siguiente a la actual es menor a la fecha final");
                                         }
                                     }
+                                    console.log("tamaño de labels3: " + labels.length);
                                 }
+                            
+
+
+                                console.log("tamaño de labels4: " + labels.length);
+                                
+                                for (var j = 0; j < diasEntreFechas + 1; j++) {
+                                    //var f = fecha1.subtract(1, "day");
+                                    var ff = fecha1.add(1, "day");
+                                    console.log("labels fin: " + labels[j]+ " j: "+j);
+                                    labels[j] = ff.dayOfYear();
+                                }
+                                //labels = labels.slice(0, diasEntreFechas+1)
+
 
                                 //Actualizacion del grafico
                                 chart.data.labels = labels;
@@ -263,4 +314,4 @@
 
 
 </script>
-
+*/

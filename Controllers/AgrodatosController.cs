@@ -55,12 +55,28 @@ namespace CitraDataStore.Controllers
 
             StringBuilder csv = new StringBuilder();
 
+            char separador = ';';
+            if (separadorDatos == 1)
+            {
+                separador = ';';
+            }
+            else if (separadorDatos == 2)
+            {
+                separador = ',';
+            }
+            else if (separadorDatos == 3)
+            {
+                separador = '\t';
+            }
+
+
+
             if (separadorDatos == 1)
             {
                 for (int i = 0; i < resultado.Count; i++)
                 {
                     resultado.ElementAt(i).datos.Replace('.', ',');
-                    csv.AppendLine(resultado.ElementAt(i).fecha.Replace(" 0:00:00", "") + ";" + resultado.ElementAt(i).hora + ";" + resultado.ElementAt(i).datos.Replace('|', ';'));
+                    csv.AppendLine(resultado.ElementAt(i).fecha + ";" + resultado.ElementAt(i).hora + ";" + resultado.ElementAt(i).datos.Replace('|', ';'));
                 }
 
             }
@@ -68,16 +84,16 @@ namespace CitraDataStore.Controllers
             {
                 for (int i = 0; i < resultado.Count; i++)
                 {
-                    string aux = resultado.ElementAt(i).datos.Replace('.', 'p');
+                    string aux = resultado.ElementAt(i).datos.Replace('.', ',');
 
-                    csv.AppendLine(resultado.ElementAt(i).fecha.Replace(" 0:00:00", "") + "," + resultado.ElementAt(i).hora + "," + aux.Replace('|', ','));
+                    csv.AppendLine(resultado.ElementAt(i).fecha + "," + resultado.ElementAt(i).hora + "," + aux.Replace('|', ','));
                 }
             }
             else if (separadorDatos == 3)
             {
                 for (int i = 0; i < resultado.Count; i++)
                 {
-                    csv.AppendLine(resultado.ElementAt(i).fecha.Replace(" 0:00:00", "") + "\t" + resultado.ElementAt(i).hora + "\t" + resultado.ElementAt(i).datos.Replace('|', '\t'));
+                    csv.AppendLine(resultado.ElementAt(i).fecha + "\t" + resultado.ElementAt(i).hora + "\t" + resultado.ElementAt(i).datos.Replace('|', '\t'));
                 }
             }
 
@@ -113,14 +129,14 @@ namespace CitraDataStore.Controllers
             {
                 for (int i = 0; i < resultado.Count; i++)
                 {
-                    csv.AppendLine(resultado.ElementAt(i).fecha.Replace(" 0:00:00", "") + separador + resultado.ElementAt(i).datos.Replace('|', separador));
+                    csv.AppendLine(resultado.ElementAt(i).fecha+ separador + resultado.ElementAt(i).datos.Replace('|', separador));
                 }
             }
             else if(datos == 1)
             {
                 for (int i = 0; i < resultado.Count; i++)
                 {
-                    csv.AppendLine(resultado.ElementAt(i).fecha.Replace(" 0:00:00", "") + separador + resultado.ElementAt(i).hora+":00:00" +separador+ resultado.ElementAt(i).datos);
+                    csv.AppendLine(resultado.ElementAt(i).fecha+ separador + resultado.ElementAt(i).hora+":00:00" +separador+ resultado.ElementAt(i).datos);
                 }
             }
 

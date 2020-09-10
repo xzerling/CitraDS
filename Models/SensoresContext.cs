@@ -222,7 +222,7 @@ namespace CitraDataStore
                                 Console.WriteLine("holamundo");
                                 reporte.Add(new Report()
                                 {
-                                    fecha = reader["fecha"].ToString(),
+                                    fecha = reader.GetDateTime("fecha").Date.ToString("d"),
                                     hora = reader["hora"].ToString(),
                                     datos = reader.GetString("medicion")
                                 });
@@ -246,7 +246,7 @@ namespace CitraDataStore
                                 Console.WriteLine("holamundo");
                                 reporte.Add(new Report()
                                 {
-                                    fecha = reader["fecha"].ToString(),
+                                    fecha = reader.GetDateTime("fecha").Date.ToString("d"),
 
                                     hora = reader["hora"].ToString(),
                                     datos = reader.GetString("medicion")
@@ -280,7 +280,7 @@ namespace CitraDataStore
                                 Console.WriteLine("holamundo");
                                 reporte.Add(new Report()
                                 {
-                                    fecha = reader["fecha"].ToString(),
+                                    fecha = reader.GetDateTime("fecha").Date.ToString("d"),
                                     hora = reader["hora"].ToString(),
                                     datos = reader.GetString("medicion")
                                 });
@@ -304,7 +304,7 @@ namespace CitraDataStore
                                 Console.WriteLine("holamundo");
                                 reporte.Add(new Report()
                                 {
-                                    fecha = reader["fecha"].ToString(),
+                                    fecha = reader.GetDateTime("fecha").Date.ToString("d"),
                                     hora = reader["hora"].ToString(),
                                     datos = reader.GetString("medicion")
                                 });
@@ -331,7 +331,7 @@ namespace CitraDataStore
                             {
                                 reporte.Add(new Report()
                                 {
-                                    fecha = reader["fecha"].ToString(),
+                                    fecha = reader.GetDateTime("fecha").Date.ToString("d"),
                                     hora = reader["hora"].ToString(),
                                     datos = reader.GetString("medicion")
                                 });
@@ -355,7 +355,7 @@ namespace CitraDataStore
                                 Console.WriteLine("holamundo");
                                 reporte.Add(new Report()
                                 {
-                                    fecha = reader["fecha"].ToString(),
+                                    fecha = reader.GetDateTime("fecha").Date.ToString("d"),
                                     hora = reader["hora"].ToString(),
                                     datos = reader.GetString("medicion")
                                 });
@@ -423,7 +423,7 @@ namespace CitraDataStore
                                 //Console.WriteLine("holamundo");
                                 reporte.Add(new Report()
                                 {
-                                    fecha = reader["fecha"].ToString(),
+                                    fecha = reader.GetDateTime("fecha").Date.ToString("d"),
                                     datos = reader.GetString("medicion")
                                 }) ;
                             }
@@ -446,7 +446,7 @@ namespace CitraDataStore
                                 //Console.WriteLine("holamundo");
                                 reporte.Add(new Report()
                                 {
-                                    fecha = reader["fecha"].ToString(),
+                                    fecha = reader.GetDateTime("fecha").Date.ToString("d"),
                                     hora = reader.GetInt16("Hor").ToString(),
                                     datos = reader.GetDouble("etia").ToString()
                                 });
@@ -481,7 +481,7 @@ namespace CitraDataStore
                     {
                         datos.Add(new DatosGrafico()
                         {
-                            fecha = reader["fecha"].ToString(),
+                            fecha = reader.GetDateTime("fecha").Date.ToString("d"),
                             valor = (double)reader["medicion"]
                         });
                     }

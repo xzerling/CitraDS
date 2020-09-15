@@ -118,7 +118,6 @@ C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\obj\Debug\netcorea
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\obj\Debug\netcoreapp2.2\Razor\Views\Admins\Delete.cshtml.g.cs
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\obj\Debug\netcoreapp2.2\Razor\Views\Admins\Edit.cshtml.g.cs
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\obj\Debug\netcoreapp2.2\Razor\Views\Admins\Index.cshtml.g.cs
-C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\obj\Debug\netcoreapp2.2\Razor\Views\Agrodatos\Graficos.cshtml.g.cs
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\obj\Debug\netcoreapp2.2\Razor\Views\Agrodatos\Index.cshtml.g.cs
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\obj\Debug\netcoreapp2.2\Razor\Views\EstacionesAsignadas\Index.cshtml.g.cs
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.cshtml.g.cs
@@ -191,3 +190,4 @@ C:\Users\pfuen\Documents\GitKrakenRepo\CitraDS\obj\Debug\netcoreapp2.2\CitraData
 C:\Users\pfuen\Documents\GitKrakenRepo\CitraDS\obj\Debug\netcoreapp2.2\CitraDataStore.pdb
 C:\Users\pfuen\Documents\GitKrakenRepo\CitraDS\obj\Debug\netcoreapp2.2\CitraDataStore.genruntimeconfig.cache
 C:\Users\pfuen\Documents\GitKrakenRepo\CitraDS\obj\Debug\netcoreapp2.2\CitraDataStore.csproj.CopyComplete
+C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\obj\Debug\netcoreapp2.2\Razor\Views\Agrodatos\Datos.cshtml.g.cs

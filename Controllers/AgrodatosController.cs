@@ -20,14 +20,15 @@ namespace CitraDataStore.Controllers
         public IActionResult Index()
         {
 
-            int id = HttpContext.Session.GetInt32("id").GetValueOrDefault();
-            List<Agrodatos> lista = context.GetStations(id);
+            List<Agrodatos> lista = context.GetPiraStations();
             return View(lista);
         }
 
-        public IActionResult Graficos()
+
+        public IActionResult Datos()
         {
-            List<Agrodatos> lista = context.GetPiraStations();
+            int id = HttpContext.Session.GetInt32("id").GetValueOrDefault();
+            List<Agrodatos> lista = context.GetStations(id);
             return View(lista);
         }
 

@@ -7,53 +7,53 @@
 <html lang="en">
 <head>
 
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-            * {
-                box-sizing: border-box;
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial;
+            font-size: 17px;
+        }
+
+        #myVideo {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+        }
+
+        .container-login100 {
+            position: fixed;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.1);
+            color: #f1f1f1;
+            width: 10%;
+            padding: 20px;
+        }
+
+        #myBtn {
+            width: 200px;
+            font-size: 18px;
+            padding: 10px;
+            border: none;
+            background: #000;
+            color: #fff;
+            cursor: pointer;
+        }
+
+            #myBtn:hover {
+                background: #ddd;
+                color: black;
             }
-
-            body {
-                margin: 0;
-                font-family: Arial;
-                font-size: 17px;
-            }
-
-            #myVideo {
-                position: fixed;
-                right: 0;
-                bottom: 0;
-                min-width: 100%;
-                min-height: 100%;
-            }
-
-            .container-login100 {
-                position: fixed;
-                bottom: 0;
-                background: rgba(0, 0, 0, 0.1);
-                color: #f1f1f1;
-                width: 10%;
-                padding: 20px;
-            }
-
-            #myBtn {
-                width: 200px;
-                font-size: 18px;
-                padding: 10px;
-                border: none;
-                background: #000;
-                color: #fff;
-                cursor: pointer;
-            }
-
-                #myBtn:hover {
-                    background: #ddd;
-                    color: black;
-                }
-        </style>
+    </style>
 
 
-    <title>Login V12</title>
+    <title>Login CDS</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -74,6 +74,8 @@
     <link rel="stylesheet" type="text/css" href="~/css/util.css">
     <link rel="stylesheet" type="text/css" href="~/css/main.css">
     <!--===============================================================================================-->
+    <script src="~/npmlib/sweetalert2/dist/sweetalert2.all.min.js"></script>
+
 </head>
 <body>
 
@@ -139,8 +141,14 @@
                 email: $('#email').val(),
                 password: $('#password').val()
                 },
-                error: function (result) {
-                alert("There is a Problem, Try Again!", result.message);
+                    error: function (result) {
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Login Fallido.',
+                            text: result.message
+                        })
+                    //alert("There is a Problem, Try Again!", result.message);
                 },
                 success: function (result) {
 
@@ -152,7 +160,12 @@
                     }
                     else
                     {
-                        alert(result.message);
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Los datos ingresados no son validos.',
+                            text: result.message
+                        })
+   
                     }
                 }
             });

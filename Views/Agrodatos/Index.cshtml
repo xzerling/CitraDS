@@ -14,8 +14,8 @@
     <script src="~/npmlib/chartjs-plugin-zoom/dist/chartjs-plugin-zoom.js"></script>
     <script src="~/npmlib/hammerjs/hammer.js"></script>
     <script src="https://momentjs.com/downloads/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+
+
 
 
 
@@ -29,7 +29,7 @@
             <strong class="panel-title">Grafico de datos disponibles</strong>
 
             <select id="select1" name="select1" class="form-control">
-                <option>Selecionar una estación</option>
+                <option value = 0>Selecionar una estación</option>
                 @foreach (var item in Model)
                 {
                     <option value=@Html.DisplayTextFor(modelItem => item.Id)> @Html.DisplayFor(modelItem => item.NombreEstacion)</option>
@@ -149,7 +149,16 @@
         var fechaI = document.getElementById("fechaI").value;
         var fechaT = document.getElementById("fechaT").value;
 
-        if (fechaI != "" && fechaT != "") {
+        if (estacion <= 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'La estación no ha sido seleccionada.',
+                text: 'Debe seleccionar una estación valida.'
+            })
+        }
+        else {
+
+            if (fechaI != "" && fechaT != "") {
 
 
             var fecha1 = moment(fechaI);
@@ -223,6 +232,7 @@
                                 for (var i = 0; i < diasEntreFechas + 1; i++) {
                                     //make sure we are not checking the last date in the labels array
                                     if (i + 1 < labels.length) {
+                                        console.log("Inicio de todo. Fecha: "+labels[i]);
                                         var date1 = moment(labels[i], "DD-MM-YYYY");
                                         var date2 = moment(labels[i + 1], "DD-MM-YYYY");
                                         var lastDate = fecha2;
@@ -260,14 +270,14 @@
 
 
                                 console.log("tamaño de labels4: " + labels.length);
-                                /*
+
                                 for (var j = 0; j < diasEntreFechas + 1; j++) {
                                     //var f = fecha1.subtract(1, "day");
                                     var ff = fecha1
                                     console.log("labels fin: " + labels[j]+ " j: "+j);
                                     labels[j] = ff.dayOfYear();
                                     ff = ff.add(1, "day");
-                                }*/
+                                }
                                 //labels = labels.slice(0, diasEntreFechas+1)
 
 
@@ -311,6 +321,10 @@
                 text: 'Debe ingresar una fecha de inicio y de termino.'
             })
         }
+
+        }
+
+
 
     }
 

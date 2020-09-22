@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -223,7 +224,7 @@ namespace CitraDataStore
                                 Console.WriteLine("holamundo");
                                 reporte.Add(new Report()
                                 {
-                                    fecha = reader.GetDateTime("fecha").Date.ToString("d"),
+                                    fecha = reader.GetDateTime("fecha").Date.ToString("dd-MM-yyyy", CultureInfo.CreateSpecificCulture("es-ES")),
                                     hora = reader["hora"].ToString(),
                                     datos = reader.GetString("medicion")
                                 });
@@ -247,7 +248,7 @@ namespace CitraDataStore
                                 Console.WriteLine("holamundo");
                                 reporte.Add(new Report()
                                 {
-                                    fecha = reader.GetDateTime("fecha").Date.ToString("d"),
+                                    fecha = reader.GetDateTime("fecha").Date.ToString("dd-MM-yyyy", CultureInfo.CreateSpecificCulture("es-ES")),
 
                                     hora = reader["hora"].ToString(),
                                     datos = reader.GetString("medicion")
@@ -281,7 +282,7 @@ namespace CitraDataStore
                                 Console.WriteLine("holamundo");
                                 reporte.Add(new Report()
                                 {
-                                    fecha = reader.GetDateTime("fecha").Date.ToString("d"),
+                                    fecha = reader.GetDateTime("fecha").Date.ToString("dd-MM-yyyy", CultureInfo.CreateSpecificCulture("es-ES")),
                                     hora = reader["hora"].ToString(),
                                     datos = reader.GetString("medicion")
                                 });
@@ -305,7 +306,7 @@ namespace CitraDataStore
                                 Console.WriteLine("holamundo");
                                 reporte.Add(new Report()
                                 {
-                                    fecha = reader.GetDateTime("fecha").Date.ToString("d"),
+                                    fecha = reader.GetDateTime("fecha").Date.ToString("dd-MM-yyyy", CultureInfo.CreateSpecificCulture("es-ES")),
                                     hora = reader["hora"].ToString(),
                                     datos = reader.GetString("medicion")
                                 });
@@ -332,7 +333,7 @@ namespace CitraDataStore
                             {
                                 reporte.Add(new Report()
                                 {
-                                    fecha = reader.GetDateTime("fecha").Date.ToString("d"),
+                                    fecha = reader.GetDateTime("fecha").Date.ToString("dd-MM-yyyy", CultureInfo.CreateSpecificCulture("es-ES")),
                                     hora = reader["hora"].ToString(),
                                     datos = reader.GetString("medicion")
                                 });
@@ -356,7 +357,7 @@ namespace CitraDataStore
                                 Console.WriteLine("holamundo");
                                 reporte.Add(new Report()
                                 {
-                                    fecha = reader.GetDateTime("fecha").Date.ToString("d"),
+                                    fecha = reader.GetDateTime("fecha").Date.ToString("dd-MM-yyyy", CultureInfo.CreateSpecificCulture("es-ES")),
                                     hora = reader["hora"].ToString(),
                                     datos = reader.GetString("medicion")
                                 });
@@ -424,7 +425,7 @@ namespace CitraDataStore
                                 //Console.WriteLine("holamundo");
                                 reporte.Add(new Report()
                                 {
-                                    fecha = reader.GetDateTime("fecha").Date.ToString("d"),
+                                    fecha = reader.GetDateTime("fecha").Date.ToString("dd-MM-yyyy", CultureInfo.CreateSpecificCulture("es-ES")),
                                     datos = reader.GetString("medicion")
                                 }) ;
                             }
@@ -447,7 +448,7 @@ namespace CitraDataStore
                                 //Console.WriteLine("holamundo");
                                 reporte.Add(new Report()
                                 {
-                                    fecha = reader.GetDateTime("fecha").Date.ToString("d"),
+                                    fecha = reader.GetDateTime("fecha").Date.ToString("dd-MM-yyyy", CultureInfo.CreateSpecificCulture("es-ES")),
                                     hora = reader.GetInt16("Hor").ToString(),
                                     datos = reader.GetDouble("etia").ToString()
                                 });
@@ -482,7 +483,7 @@ namespace CitraDataStore
                     {
                         datos.Add(new DatosGrafico()
                         {
-                            fecha = reader.GetDateTime("fecha").Date.ToString("d"),
+                            fecha = reader.GetDateTime("fecha").Date.ToString("dd-MM-yyyy", CultureInfo.CreateSpecificCulture("es-ES")),
                             valor = (double)reader["medicion"]
                         });
                     }

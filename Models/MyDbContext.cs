@@ -29,8 +29,8 @@ namespace CitraDataStore.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySql("Server=localhost;Database=wwbiov_citrads;User=wwbiov_admin;Password=c1tr4084!" + '"'+"#");
-                //optionsBuilder.UseMySql("Server=citrads.cmmqgr4kvqxz.us-east-2.rds.amazonaws.com;Database=citra;User=admin;Password=c1tr420cds");
+                //optionsBuilder.UseMySql("Server=localhost;Database=wwbiov_citrads;User=wwbiov_admin;Password=c1tr4084!" + '"'+"#");
+                optionsBuilder.UseMySql("Server=citrads.cmmqgr4kvqxz.us-east-2.rds.amazonaws.com;Database=citra;User=admin;Password=c1tr420cds");
             }
         }
 

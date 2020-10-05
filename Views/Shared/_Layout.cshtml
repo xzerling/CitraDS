@@ -4,25 +4,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Admin Panel</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="~/bc/bootstrap/dist/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-    <!-- DataTables -->
-    <link rel="stylesheet" href="~/bc/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <title>Milimetric</title>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="~/bc/font-awesome/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="~/bc/Ionicons/css/ionicons.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="~/dist/css/AdminLTE.min.css">
-    <link rel="stylesheet" href="~/dist/css/skins/skin-blue.min.css">
-    <!-- jQuery 3 -->
-    <script src="~/bc/jquery/dist/jquery.min.js"></script>
+    <!-- Custom fonts for this template-->
+    <link href="~/Tema/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="~/Tema/css/sb-admin-2.min.css" rel="stylesheet">
+
     <!-- Geoblaze-->
     <script src="~/npmlib/geoblaze/dist/geoblaze.web.js"></script>
     <!-- SweetAlert2 -->
@@ -30,134 +27,231 @@
     <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
 
     <script src="~/npmlib/proj4/dist/proj4.js"></script>
-    <!-- Google Font -->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/Tema/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Tema/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/Tema/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="~/Tema/js/sb-admin-2.min.js"></script>
+
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
-    <div class="wrapper">
-        <!-- Main Header -->
-        <header class="main-header">
-            <!-- Logo -->
 
-            <a href="index2.html" class="logo">
-                <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b>DS</b>C</span>
 
-                <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b>DataStorage</b> citra</span>
+<body id="page-top">
 
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index">
+                <div class="sidebar-brand-icon " >
+                    <i class="fas fa-seedling"></i>
+
+                </div>
+                <div class="sidebar-brand-text mx-3"><b>DataStorage</b> citra</div>
             </a>
-            <!-- Header Navbar -->
-            <nav class="navbar navbar-static-top" role="navigation">
-                <!-- Sidebar toggle button-->
-                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                    <span class="sr-only">Toggle navigation</span>
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link" href="/agrodatos/index">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
                 </a>
-                <!-- Navbar Right Menu -->
-                <div class="navbar-custom-menu">
-                    <ul class="nav navbar-nav">
-                        <!-- User Account Menu -->
-                        <li class="dropdown user user-menu">
-                            <!-- Menu Toggle Button -->
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <!-- The user image in the navbar-->
-                                <img src="~/dist/img/logo.jpg" class="user-image" alt="User Image">
-                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                <span class="hidden-xs">@Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("name"))</span>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Interface
+            </div>
+
+            @Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("menuString"))
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Addons
+            </div>
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+
+
+        </ul>
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
                             </a>
-                            <ul class="dropdown-menu">
-                                <!-- The user image in the menu -->
-                                <li class="user-header">
-                                    <img src="~/dist/img/logo.jpg" class="img-circle" alt="User Image">
-                                    <p>
-                                        @Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("name")) - Citra 2020
-                                        <small>Member since Apr. 2020</small>
-                                    </p>
-                                </li>
-                                <!-- Menu Body -->
-                                <li class="user-body">
-                                    <div class="row">
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Account</a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
                                         </div>
                                     </div>
-                                    <!-- /.row -->
-                                </li>
-                                <!-- Menu Footer-->
-                                <li class="user-footer">
-                                    <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Perfil</a>
-                                    </div>
-                                    <div class="pull-right">
-                                        <a href="/Account/Logout" class="btn btn-default btn-flat">Log out</a>
-                                    </div>
-                                </li>
-                            </ul>
+                                </form>
+                            </div>
                         </li>
+
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("name"))</span>
+                                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Settings
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
                     </ul>
-                </div>
-            </nav>
-        </header>
-        <!-- Left side column. contains the logo and sidebar -->
-        <aside class="main-sidebar">
-            <!-- sidebar: style can be found in sidebar.less -->
-            <section class="sidebar">
 
-                <!-- Sidebar user panel (optional) -->
-                <div class="user-panel">
-                    <div class="pull-left image">
-                        <img src="~/dist/img/logo.jpg" class="w3-round" alt="User Image">
-                    </div>
-                    <div class="pull-left info">
-                        <p>@Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("name"))</p>
-                        <!-- Status -->
-                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </nav>
+                <!-- End of Topbar -->
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    @RenderBody()
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
                     </div>
                 </div>
-                <!-- search form (Optional) -->
-                <form action="#" method="get" class="sidebar-form">
-                    <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Search...">
-                        <span class="input-group-btn">
-                            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>
-                </form>
-                <!-- /.search form -->
-                <!-- Sidebar Menu -->
+            </footer>
+            <!-- End of Footer -->
 
-                <ul class="sidebar-menu" data-widget="tree">
-                    <li class="header">Menu</li>
-                    @Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("menuString"))
-                </ul>
-                <!-- /.sidebar-menu -->
-            </section>
-            <!-- /.sidebar -->
-        </aside>
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            @RenderBody()
-            <!-- /.content -->
         </div>
-        <!-- /.content-wrapper -->
-        <!-- Main Footer -->
-        <footer class="main-footer">
-            <!-- Default to the left -->
-            <strong>Copyright © 2020 <a href="https://www.utalca.cl">CITRA Utalca</a>.</strong> All rights reserved.
-        </footer>
+        <!-- End of Content Wrapper -->
+
     </div>
-    <!-- ./wrapper -->
-    <!-- REQUIRED JS SCRIPTS -->
-    <!-- Bootstrap 3.3.7 -->
-    <script src="~/bc/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- DataTables -->
-    <script src="../../bc/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="../../bc/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="~/dist/js/adminlte.min.js"></script>
+    <!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="/Account/Logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    
+
 </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </html>

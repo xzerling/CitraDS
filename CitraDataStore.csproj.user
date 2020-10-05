@@ -12,7 +12,7 @@
     <_SelectedScaffolderID>MvcControllerWithActionsScaffolder</_SelectedScaffolderID>
     <_SelectedScaffolderCategoryPath>root/Common</_SelectedScaffolderCategoryPath>
     <NameOfLastUsedPublishProfile>registry.hub.docker.com_xzerling</NameOfLastUsedPublishProfile>
-    <ActiveDebugProfile>Docker</ActiveDebugProfile>
+    <ActiveDebugProfile>CitraDataStore</ActiveDebugProfile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>

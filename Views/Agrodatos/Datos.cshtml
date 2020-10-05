@@ -25,13 +25,23 @@
 <!-- Main content -->
 <html>
 <body>
-
     <h1>Descarga de datos Agroclimatologicos</h1>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".cd-example-modal-lg">Descargar Datos</button>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".cd-modal-lg">Descargar Et</button>
-    <div class="row text-center" style="margin-top:100px">
-        <img class="" src="~/dist/img/logo.png" />
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Descarga de datos Agroclimatologicos</h6>
+        </div>
+        <div class="card-body">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".cd-example-modal-lg">Descargar Datos</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".cd-modal-lg">Descargar Et</button>
+            <div class="row text-center" style="margin-top:100px">
+                <img class="" src="~/dist/img/logo.png" />
+            </div>
+        </div>
     </div>
+
+
+
+
 
 </body>
 <!-- /.content -->
@@ -42,19 +52,19 @@
 
 
 
-<div class="modal fade cd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModal">
+<div class="modal fade cd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="myModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
 
 
 
-            <div class="panel panel-primary">
-                <div class="panel-heading">
+            <div class="card shadow mb-4">
+                <div class="card-header">
                     <strong class="panel-title">Descarga de datos Agroclimatologicos</strong>
 
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
 
 
                     <div class="form-group row">
@@ -179,7 +189,7 @@
                 </div>
 
 
-                <div class="panel-footer">
+                <div class="card-footer">
                     <button type="submit" class="btn btn-success" id="Descargar" onclick="descargarDatos()">
                         <i class="fa fa-dot-circle-o"></i> Descargar
                     </button>

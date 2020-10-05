@@ -5,40 +5,47 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
         @ViewData["Title"]
     </h1>
+
+
+    <!-- Page level plugins -->
+    <script src="~/Tema/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Tema/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
 </section>
 <!-- Main content -->
-<section class="content container-fluid">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">Lista de Usuarios</h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <table id="example2" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Nombre</th>
-                                <th>Email</th>
-                                <th>Rol</th>
-                                <!--
-                               <th>Estacion</th>
-    -->
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (Admins admins in Model.Admins)
-                            {
+
+<section class="container-fluid">
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Lista de Usuarios</h6>
+        </div>
+        <!-- /.box-header -->
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="example2" class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <!--
+                                                       <th>Estacion</th>
+                            -->
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Admins admins in Model.Admins)
+                        {
                             <tr>
                                 <td>
                                     <input type="hidden" id="@admins.Id" value="@admins.Id" readonly>
@@ -55,44 +62,43 @@
                                 </td>
 
                                 <!-- Asignar Estacion
-    <td>
-        <select id="@admins.Id" name="@admins.Id" class="form-control">
-            <option>Selecionar una estación</option>
-            @foreach (Estacioneve agrodatos in Model.Agrodatos)
-            {
-                <option value=@agrodatos.Id> @agrodatos.Nombre</option>
-
-            }
-        </select>
-        <button type="submit" class="btn btn-success" id="Asignar" onclick="obtenerDatos(@admins.Id)">Asignar</button>
-    </td>
-
-     -->
                                 <td>
-                                    <a href="/Admins/Edit/@admins.Id">Editar</a> |
-                                    <a href="/Admins/Delete/@admins.Id">Borrar</a>
+                                    <select id="@admins.Id" name="@admins.Id" class="form-control">
+                                        <option>Selecionar una estación</option>
+                                        @foreach (Estacioneve agrodatos in Model.Agrodatos)
+                                        {
+                                            <option value=@agrodatos.Id> @agrodatos.Nombre</option>
+
+                                        }
+                                    </select>
+                                    <button type="submit" class="btn btn-success" id="Asignar" onclick="obtenerDatos(@admins.Id)">Asignar</button>
+                                </td>
+
+                                 -->
+                                <td>
+                                    <a href="/Admins/Edit/@admins.Id" class="btn btn-outline-warning">Editar</a> |
+                                    <a href="/Admins/Delete/@admins.Id" class="btn btn-outline-danger">Borrar</a>
                                 </td>
                             </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+
 </section>
 
 <script>
-    $(function () {
-        $('#example2').DataTable({
-            'paging': true,
-            'lengthChange': false,
-            'searching': false,
-            'ordering': true,
-            'info': true,
-            'autoWidth': false
-        })
-    })</script>
+
+
+    $(document).ready(function () {
+        $('#example2').DataTable()
+    })
+</script>
+
+
+
 
 <script>
     function obtenerDatos() {

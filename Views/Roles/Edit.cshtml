@@ -1,7 +1,6 @@
-﻿@model CitraDataStore.Models.Roles
-
+﻿
 @{
-    ViewData["Title"] = "Edit Role & Permissions";
+    ViewData["Title"] = "Modificacíon de roles de usuario";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -17,26 +16,26 @@
         <!-- left column -->
         <div class="col-md-12">
             <!-- general form elements -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Edit Admin Info</h3>
+            <div class="card shadow mb-4">
+                <div class="card-header with-border">
+                    <h5 class="m-0 font-weight-bold text-primary">Editar información</h5>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
                 <form method="post" asp-action="/Roles/Edit">
-                    <div class="box-body">
+                    <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Title</label>
-                            <input type="text" class="form-control" id="Title" name="Title" value="@Model.Title" placeholder="Enter Title">
+                            <label for="exampleInputEmail1">Título</label>
+                            <input type="text" class="form-control" id="Title" name="Title" value="@Model.Title" placeholder="Ingresar nuevo título de rol">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Description</label>
-                            <input type="text" class="form-control" id="Description" name="Description" value="@Model.Description" placeholder="Enter Description">
+                            <label for="exampleInputPassword1">Descripción</label>
+                            <input type="text" class="form-control" id="Description" name="Description" value="@Model.Description" placeholder="Ingresar nueva descripción">
                         </div>
                     </div>
                     <!-- /.box-body -->
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-success">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -44,31 +43,37 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="white-box">
-                <h3 class="box-title m-b-30">Assign Roles</h3>
-                <div class="row">
-                    <div class="col-lg-12 col-sm-12">
 
-                        <div style="margin-left:28px; margin-top:20px;">
-                            <button type="button" class="btn">Collepsed</button>
-                            <button type="button" class="btn">Expanded</button>
-                            <button type="button" class="btn">Checked All</button>
-                            <button type="button" class="btn">Unchek All</button>
-                        </div>
+    <div class="card shadow mb-4">
+        <div class="card-header with-border">
+            <h5 class="m-0 font-weight-bold text-primary">Editar permisos de usuario</h5>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-body">
+                    <h6 class="box-title m-b-30">Asignar permisos</h6>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12">
 
-                        <ul class="mytree">
-                            @Html.Raw(ViewBag.menu)
-                        </ul>
-                        <div style="margin-left:28px">
-                            <button onclick="Done()" class="btn btn-primary">Update</button>
+                            <div style="margin-left:28px; margin-top:20px;">
+                                <button type="button" class="btn">Collepsed</button>
+                                <button type="button" class="btn">Expanded</button>
+                                <button type="button" class="btn">Checked All</button>
+                                <button type="button" class="btn">Unchek All</button>
+                            </div>
+
+                            <ul class="mytree">
+                                @Html.Raw(ViewBag.menu)
+                            </ul>
+                            <div style="margin-left:28px">
+                                <button onclick="Done()" class="btn btn-success">Guardar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        </div>
 </section>
 
 <script>

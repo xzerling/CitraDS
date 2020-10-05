@@ -15,48 +15,59 @@
     <script src="~/npmlib/hammerjs/hammer.js"></script>
     <script src="https://momentjs.com/downloads/moment.min.js"></script>
 
-
-
-
-
-
 </head>
 
 
 <body>
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <strong class="panel-title">Grafico de datos disponibles</strong>
+    <h1>Sistema de visualización de datos disponibles</h1>
+    <div class="row">
 
-            <select id="select1" name="select1" class="form-control">
-                <option value = 0>Selecionar una estación</option>
-                @foreach (var item in Model)
-                {
-                    <option value=@Html.DisplayTextFor(modelItem => item.Id)> @Html.DisplayFor(modelItem => item.NombreEstacion)</option>
-                }
+        <div class="col-md-7">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Gráfico</h6>
 
-            </select>
 
-            <span>Ingresar fecha de inicio</span>
-            <input type="date" id="fechaI" name="fechaI" class="form-control" placeholder="Fecha de inicio">
-
-            <span>Ingresar fecha de Termino</span>
-            <input type="date" id="fechaT" name="fechaT" class="form-control" placeholder="Fecha de Termino">
-
-            <button type="submit" class="btn btn-success" id="graficar" onclick="dibujarGrafico()">
-                <i class="fa fa-dot-circle-o"></i> Graficar
-            </button>
-
-            <button type="submit" class="btn btn-warning" id="descargaDatos" onclick="moveToDownload()">
-                <i class="fa fa-download"></i> Descargar Datos
-            </button>
-
+                </div>
+                <div class="card-body">
+                    <canvas id="line-chart" width="600" height="300"></canvas>
+                </div>
+            </div>
         </div>
 
-        <div class="panel-body">
+        <div class="col-md-5">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Completa el formulario</h6>
+                </div>
 
-            <canvas id="line-chart" width="600" height="300"></canvas>
+                <div class="card-body">
+                    <select id="select1" name="select1" class="form-control">
+                        <option value=0>Selecionar una estación</option>
+                        @foreach (var item in Model)
+                        {
+                            <option value=@Html.DisplayTextFor(modelItem => item.Id)> @Html.DisplayFor(modelItem => item.NombreEstacion)</option>
+                        }
+                    </select>
 
+                    <span>Ingresar fecha de inicio</span>
+                    <input type="date" id="fechaI" name="fechaI" class="form-control" placeholder="Fecha de inicio">
+
+                    <span>Ingresar fecha de Termino</span>
+                    <input type="date" id="fechaT" name="fechaT" class="form-control" placeholder="Fecha de Termino">
+
+                </div>
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-success" id="graficar" onclick="dibujarGrafico()">
+                        <i class="fa fa-dot-circle-o"></i> Graficar
+                    </button>
+
+                    <button type="submit" class="btn btn-warning" id="descargaDatos" onclick="moveToDownload()">
+                        <i class="fa fa-download"></i> Descargar Datos
+                    </button>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -92,7 +103,7 @@
                 fontSize: 16
             },
             legend: {
-                position: 'left'
+                position: 'top'
             },
             scales: {
                 xAxes: [{
@@ -302,7 +313,7 @@
                                     Swal.fire({
                                         icon: 'success',
                                         title: 'Datos completos',
-                                        text: 'Todos los datos del intervalo estan disponibles.'
+                                        text: 'Todos los datos del intervalo están disponibles.'
                                     })
                                     console.log("Dias entre fecha: ", diasEntreFechas, "cantidad de entradas: ", Object.values(data).length)
                                 }

@@ -1,295 +1,362 @@
-﻿<html>
+﻿@model ViewModel
+
+@{
+    ViewData["Title"] = "Mapa de prueba";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html>
+
 <head>
-    <meta charset="utf-8">
-    <title>plottygeotiff</title>
-
-    <script src="~/dist/plotty.min.js"></script>
-    <script src="~/dist/nouislider.js"></script>
-    <script async src="https://cdn.jsdelivr.net/npm/geotiff"></script>
-    <script src="~/dist/ol-debug.js"></script>
-    <script src="~/olGeoTiff_07.js"></script>
-
-
-    <!-- jquery is NOT required and only used for handling the user input... just lazyness :)
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.5.0/nouislider.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.3.1/css/ol.css">
-    <style>
-        .slider {
-            width: 100%;
-            margin-top: 50px;
-        }
-
-        .map {
-            width: 100%;
-            height: 600px;
-            margin-top: 20px;
-        }
-
-        select {
-            margin-top: 15px;
-        }
-
-        .mapcontainer {
-            padding: 0 100px;
-            text-align: center;
-        }
-
-        .slidercontainer {
-            padding: 0 100px;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tiled WMS</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v5.3.0/css/ol.css" type="text/css">
+    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+    
 </head>
+
 <body>
-    <div class="mapcontainer">
-        <div id="s2map" class="map"></div>
+    <h4>Mapa de pruebas</h4>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow mb-4">
+                <div class="card-header"><h5>Mapa</h5></div>
+                <div class="card-body">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            <div id="map" class="map"></div>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="slidercontainer">
-            <div class="slider domainslider"></div>
-            <div class="slider opacityslider"></div>
+                <div class="card-footer">
+                    <div class="row">
+
+                        <label>Coordenadas:</label>
+                        <div class="col-md-3" id="mouse-position"></div>
+
+                        <div clas="col-md-2">
+                            <label>Proyección</label>
+                            <select id="projection">
+                                <option value="EPSG:4326">EPSG:4326</option>
+                                <option value="EPSG:3857">EPSG:3857</option>
+                                <option value="EPSG:32719">EPSG:32719</option>
+                            </select>
+                        </div>
+
+                        <div clas="col-md-3">
+                            <label>Precisión</label>
+                            <input id="precision" type="number" min="0" max="12" value="4" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
-        <select class="palette">
-            <option>viridis</option>
-            <option>inferno</option>
-            <option>rainbow</option>
-            <option>jet</option>
-            <option>hsv</option>
-            <option>hot</option>
-            <option>cool</option>
-            <option>spring</option>
-            <option>summer</option>
-            <option>autumn</option>
-            <option>winter</option>
-            <option>bone</option>
-            <option>copper</option>
-            <option>greys</option>
-            <option>yignbu</option>
-            <option>greens</option>
-            <option>yiorrd</option>
-            <option>bluered</option>
-            <option>rdbu</option>
-            <option>picnic</option>
-            <option>portland</option>
-            <option selected>blackbody</option>
-            <option>earth</option>
-            <option>electric</option>
-            <option>magma</option>
-            <option>plasma</option>
-        </select>
+
+
+        <div class="col-md-4">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h4>Herramientas de Mapa</h4>
+                </div>
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="col">
+
+                            <div clas="row-md-2">
+                                <h5>Control de Polígonos</h5>
+                                <div class="btn-group d-flex" role="group">
+                                    <button type="button" id="b1" value="btn1" onclick="addInteraction(); disableB1()" class="btn btn-primary">Dibujar</button>
+                                    <button type="button" id="b2" value="btn2" onclick="removeInteraction(); disableB2()" disabled="true" class="btn btn-primary ">Terminar</button>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div clas="row-md-2">
+                                <h5>Indicadores</h5>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                                    <label class="custom-control-label" for="customRadio1">NDVI</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                                    <label class="custom-control-label" for="customRadio2">ET24</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
+                                    <label class="custom-control-label" for="customRadio3">LAI</label>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div clas="row-md-2">
+                                <h5>Operaciónes</h5>
+                                <button type="button" id="save" onclick="printpoly()" class="btn btn-success">Calcular Suma</button>
+                                <button type="button" id="sum" class="btn btn-success">Guardar</button>
+                            </div>
+
+                            <hr />
+
+                            <div clas="row-md-2">
+                                <form class="form-inline">
+                                    <label>Tipo de Geometria &nbsp;</label>
+                                    <select id="type">
+                                        <option value="Polygon">Polígono</option>
+                                        <!--
+                                            <option value="Point">Point</option>
+                                            <option value="LineString">LineString</option>
+                                            <option value="Circle">Circle</option>
+                                            -->
+                                    </select>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <footer class="blockquote-footer">
+                        <small class="text-muted">
+                            Someone famous in <cite title="Source Title">Source Title</cite>
+                        </small>
+                    </footer>
+
+                </div>
+            </div>
+        </div>
     </div>
-
-    <script>
-
-
-    // set variables
-      const projection = ol.proj.get('EPSG:4326');
-      const projectionExtent = projection.getExtent();
-      const size = ol.extent.getWidth(projectionExtent) / 256;
-      const resolutions = new Array(18);
-      const matrixIds = new Array(18);
-
-    // create matrix
-      for (let z = 0; z < 18; ++z) {
-        // generate resolutions and matrixIds arrays for this WMTS
-        // eslint-disable-next-line no-restricted-properties
-        resolutions[z] = size / Math.pow(2, (z + 1));
-        matrixIds[z] = z;
-      }
-
-    // define the wms layer
-
-        var wmslayer_s2 = new ol.layer.Tile({
-            source: new ol.source.WMTS({
-                url: 'http://localhost:8080/geoserver/localhost/wms?service=WMTS&version=1.1.0&request=GetMap&layers=localhost:LC08_L1TP_233086_20131005_20170429_01_T1_sr_ndvi&bbox=126584.999972549,5732785.00003017,355814.99997254903,5963515.00003017&width=763&height=768&srs=EPSG:32719&format=image/geotiff',
-                projection,
-                tileGrid: new ol.tilegrid.WMTS({
-                    origin: ol.extent.getTopLeft(projectionExtent),
-                    resolutions,
-                    matrixIds,
-                }),
-                requestEncoding: 'REST',
-                transition: 0,
-            })
-        });
-
-        //imagen Satelital (Se debe modificar para ir cambiando por fecha)
-        var landsat = new ol.layer.Tile({
-            opacity: 0.7,
-            source: new ol.source.TileWMS({
-                url: 'http://localhost:8080/geoserver/localhost/wms?',
-                params: { 'LAYERS': 'localhost:LC08_L1TP_233086_20131005_20170429_01_T1_sr_ndvi', 'TILED': true },
-                serverType: 'geoserver',
-                // Countries have transparency, so do not fade tiles:
-                transition: 0
-            })
-        });
-
-
-
-    // eox baselayer
-      var tile_grid = new ol.tilegrid.WMTS({origin:ol.extent.getTopLeft(projectionExtent),resolutions:resolutions,matrixIds:matrixIds});
-      var s2maps = new ol.layer.Tile({
-        source: new ol.source.WMTS({
-          layer:'s2cloudless',
-          attributions:[new ol.Attribution({html:'<a xmlns:dct="http://purl.org/dc/terms/" href="https://s2maps.eu" property="dct:title">Sentinel-2 cloudless - https://s2maps.eu</a> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://eox.at" property="cc:attributionName" rel="cc:attributionURL">EOX IT Services GmbH</a> (Contains modified Copernicus Sentinel data 2016 &amp; 2017)'})],
-          matrixSet:'WGS84',
-          format:'image/jpeg',
-          projection:projection,
-          tileGrid:tile_grid,
-          style:'default',
-          wrapX:!0,
-          urls:[
-            "//a.s2maps-tiles.eu/wmts/",
-            "//b.s2maps-tiles.eu/wmts/",
-            "//c.s2maps-tiles.eu/wmts/",
-            "//d.s2maps-tiles.eu/wmts/",
-            "//e.s2maps-tiles.eu/wmts/"
-          ]
-        })
-      });
-
-    // define the map
-      var map_result_s2 = new ol.Map({
-        target: 's2map',
-        layers: [
-           s2maps,
-            landsat,
-        ],
-        view: new ol.View({
-          projection,
-          center: [-71.636, -35.406],
-          zoom: 12,
-          maxZoom: 14,
-          minZoom: 3
-        }),
-        controls: ol.control.defaults({
-          attributionOptions: {
-            collapsible: false
-          }
-        }),
-      });
-
-        // setup datafunctions
-        var datafunctions = {};
-        datafunctions['NDVI'] = function (b) {
-            if (b[1] + b[2] + b[3] + b[4] == 0) return 10; // return 10 as nodata value
-            return (b[4] - b[3]) / (b[4] + b[3]); // otherwise return NDVI
-        };
-        datafunctions['NDI45'] = function (b) {
-            if (b[1] + b[2] + b[3] + b[4] == 0) return 10; // return 10 as nodata value
-            return (b[4] - b[1]) / (b[4] + b[1]); // otherwise return NDVI
-        };
-
-        // olGeoTiff setup
-        var olgt_s2map = new olGeoTiff(wmslayer_s2);
-        olgt_s2map.plotOptions.domain = [-0.2, 0.2];
-        olgt_s2map.plotOptions.noDataValue = 10;
-        olgt_s2map.plotOptions.palette = 'blackbody';
-        olgt_s2map.plotOptions.dataFunction = datafunctions['NDVI'];
-
-    // handle user input
-        $(document).ready(async function () {
-            
-            console.log(GeoTIFF);
-
-            const raster = await geoblaze.load("http://localhost:8080/geoserver/localhost/wms?service=WMS&version=1.1.0&request=GetMap&layers=localhost:LC08_L1TP_233086_20131005_20170429_01_T1_sr_ndvi&bbox=126584.999972549,5732785.00003017,355814.99997254903,5963515.00003017&width=763&height=768&srs=EPSG:32719&format=image/geotiff");
-            var sumaaa = geoblaze.sum(raster);
-            console.log("sm: ", sumaaa);
-
-            const respuesta = await fetch("http://localhost:8080/geoserver/localhost/wms?service=WMS&version=1.1.0&request=GetMap&layers=localhost:LC08_L1TP_233086_20131005_20170429_01_T1_sr_ndvi&bbox=126584.999972549,5732785.00003017,355814.99997254903,5963515.00003017&width=763&height=768&srs=EPSG:32719&format=image/geotiff");
-            console.log("resulrado del fetch", respuesta);
-            const arrbuff = await respuesta.arrayBuffer();
-            console.log("resultado del arraybuffer: ", arrbuff);
-            const tifff = await GeoTIFF.fromArrayBuffer(arrbuff);
-            var read = await tifff.getImage();
-            console.log("origen: ", read.getOrigin());
-            console.log("raster: ", await read.readRasters());
-            
-            /*
-            const resp = await GeoTIFF.fromUrl('http://localhost:8080/geoserver/localhost/wms?service=WMS&version=1.1.0&request=GetMap&layers=localhost:LC08_L1TP_233086_20131005_20170429_01_T1_sr_ndvi&bbox=126584.999972549,5732785.00003017,355814.99997254903,5963515.00003017&width=763&height=768&srs=EPSG:32719&format=image/tiff');
-
-            console.log("fromURL: ", resp);
-            const lectura = await resp.getImage();
-            console.log("lawea: ", lectura);
-
-            console.log("origen: ", lectura.getOrigin());
-            console.log("raster: ", await lectura.readRasters());
-
-            
-            var oReq = new XMLHttpRequest();
-            oReq.open("GET", resp, true);
-            //oReq.responseType = "arraybuffer";
-
-            console.log("oreq: ", oReq);
-            oReq.onload = function (oEvent) {
-                var t0 = performance.now();
-                var tiff = GeoTIFF.parse(this.response);
-                var tiff = GeoTIFF.parse(this.response);
-                var image = tiff.getImage();
-                var data = image.readRasters()[0];
-                var tiepoint = image.getTiePoints()[0];
-                var pixelScale = image.getFileDirectory().ModelPixelScale;
-                var t1 = performance.now();
-                console.log("Decoding took " + (t1 - t0) + " milliseconds.")
-            };
-            oReq.send(); //start process
-            */
-
-
-            
-            //console.log("Number of images (pyramids):", tiff.getOrigin());
-
-        var $container = $('#s2map').parent();
-
-        // slider1 (domain)
-          var slider = $container.find('.domainslider')[0];
-
-          noUiSlider.create(slider, {
-            start: olgt_s2map.plotOptions.domain,
-            connect: true,
-            range: { 'min': -1, 'max': 1 },
-            tooltips: true,
-          });
-
-          slider.noUiSlider.on('change', function(values) {
-            olgt_s2map.plotOptions.domain = [values[0], values[1]];
-            olgt_s2map.redraw();
-          });
-
-        // slider2 (opacity)
-          var slider2 = $container.find('.opacityslider')[0];
-
-          var opacity = 1;
-          noUiSlider.create(slider2, {
-            start: opacity,
-            connect: true,
-            range: { 'min': 0, 'max': 1 },
-            tooltips: true,
-          });
-          wmslayer_s2.setOpacity(opacity);
-
-          slider2.noUiSlider.on('slide', function(values) {
-            wmslayer_s2.setOpacity(values[0]*1);
-          });
-
-        // palette
-          $container.find('.palette').on("change", function() {
-            var palette = this.options[this.selectedIndex].text;
-            olgt_s2map.plotOptions.palette = palette;
-            olgt_s2map.redraw();
-          });
-
-        // datafunctions
-          $container.find('.datafunction').on("change", function() {
-            var func = this.options[this.selectedIndex].text;
-            olgt_s2map.plotOptions.dataFunction = datafunctions[func];
-            olgt_s2map.redraw();
-          });
-      });
-
-    </script>
-
-
 </body>
 </html>
+
+<script>
+
+    const pro = proj4.defs("EPSG:32719", "+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs");
+    ol.proj.proj4.register(proj4);
+
+    //Coordenada del mapa desde el cursor
+    var mousePositionControl = new ol.control.MousePosition({
+        coordinateFormat: ol.coordinate.createStringXY(4),
+        projection: 'EPSG:4326',
+        // comment the following two lines to have the mouse position
+        // be placed within the map.
+        className: 'custom-mouse-position',
+        target: document.getElementById('mouse-position'),
+        undefinedHTML: '&nbsp;'
+    });
+
+    //Mapa Satelital
+    var raster = new ol.layer.Tile({
+        opacity: 0.7,
+        proyection: 'EPSG:32719',
+        source: new ol.source.XYZ({
+            attributions: ['Powered by Esri',
+                'Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community'],
+            attributionsCollapsible: false,
+
+            url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+            proyection: 'EPSG:32719',
+            maxZoom: 23
+
+        })
+    });
+
+    //imagen Satelital (Se debe modificar para ir cambiando por fecha)
+    var landsat = new ol.layer.Tile({
+        opacity: 0.7,
+        proyection: 'EPSG:32719',
+        source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/localhost/wms?',
+            params: { 'LAYERS': 'localhost:LC08_L1TP_233086_20131005_20170429_01_T1_sr_ndvi' },
+            proyection: 'EPSG:32719',
+            serverType: 'geoserver',
+
+            // Countries have transparency, so do not fade tiles:
+            transition: 0
+        })
+    });
+
+    var tiff_de_geos = new ol.layer.Tile({
+        proyection: 'EPSG:32719',
+        source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/localhost/wms?',
+            params: { 'LAYERS': 'localhost:LC08_L1TP_233086_20131005_20170429_01_T1_sr_ndvi', 'FORMAT': 'image/tiff' },
+            proyection: 'EPSG:32719',
+            serverType: 'geoserver'
+        })
+    });
+
+    var projectionSelect = document.getElementById('projection');
+    projectionSelect.addEventListener('change', function (event) {
+        mousePositionControl.setProjection(event.target.value);
+    });
+
+    var precisionInput = document.getElementById('precision');
+    precisionInput.addEventListener('change', function (event) {
+        var format = ol.coordinate.createStringXY(event.target.valueAsNumber);
+        mousePositionControl.setCoordinateFormat(format);
+    });
+
+    //Mapa plano con calles
+    var street = new ol.layer.Tile({ source: new ol.source.OSM() });
+
+
+
+    //Vector para guardar los poligonos.
+    var source = new ol.source.Vector({
+        proyection: 'EPSG:3857'
+    })
+
+    //capa para agregar los vectores
+    var vector = new ol.layer.Vector({
+        source: source,
+        proyection: 'EPSG:3857'
+    });
+
+
+    //"Constructor" del elemento mapa, Se le agregan las capas de satelite, imagen, y calle. Asi como tambien el vector
+    // donde son guardados los poligonos.
+    var map = new ol.Map({
+        pixelRatio: 1,
+        layers: [street, raster, landsat, vector],
+        target: 'map',
+        controls: ol.control.defaults().extend([mousePositionControl]),
+        view: new ol.View({
+            proyection: 'EPSG:32719',
+            center: [-71, -35],
+            zoom: 5
+        })
+    });
+
+    var typeSelect = document.getElementById('type');
+    var sumaaa;
+    var geo;
+
+    var ondrawend = async function (e) {
+        console.log(e.feature.getGeometry());
+        var allfeat = vector.getSource().getFeatures();
+        console.log("allfeats: ", allfeat);
+    };
+
+    var draw; // global so we can remove it later
+    function addInteraction() {
+        var value = typeSelect.value;
+        if (value !== 'None') {
+            draw = new ol.interaction.Draw({
+                source: source,
+                type: typeSelect.value
+            });
+            draw.on('drawend', ondrawend);
+            map.addInteraction(draw);
+            console.log("hallo");
+        }
+    }
+
+    function removeInteraction() {
+        map.removeInteraction(draw);
+    }
+
+    // Habilita/desabilida los botones
+    function disableB2() {
+        document.getElementById("b1").disabled = false;
+        document.getElementById("b2").disabled = true;
+    }
+    function disableB1() {
+        document.getElementById("b1").disabled = true;
+        document.getElementById("b2").disabled = false;
+    }
+
+
+    function deletePoly() {
+
+    }
+
+
+    /**
+        * Handle change event.
+        */
+    typeSelect.onchange = function () {
+        map.removeInteraction(draw);
+        addInteraction();
+    };
+
+
+    /*
+        *
+        * TEST
+        *
+        * */
+
+
+    //var GjsonPar = new ol.Format.GeoJSON();
+
+    //var polyJson = GjsonPar.write(vector.features);
+
+
+    async function printpoly() {
+        var interaction = vector.getSource().getFeatures();
+        interaction.forEach(async function (feature) {
+            //var newgeo = feature;
+            //newgeo.getGeometry().transform('EPSG:3857', "EPSG:32719");
+            var newfeat = feature.clone();
+            var transform = newfeat.getGeometry().transform('EPSG:3857', "EPSG:32719");
+            var coord = newfeat.getGeometry().getCoordinates();
+
+            //var workspace = layer.params.LAYERS.split(':');
+            // var downloadurl = "http://localhost:8080/geoserver/" + workspace[0] + "/wcs?service=WCS&version=2.0.1&request=GetCoverage&CoverageId=" + layer.params.LAYERS + "&format=image/tiff"
+            //window.open(downloadurl);
+
+
+            console.log("poligono: " + coord);
+            //coord = ol.proj.transform(coord, 'EPSG:32719', 'EPSG:4326');
+
+            const img = await geoblaze.load("http://localhost:8080/geoserver/localhost/wms?service=WMS&version=1.1.0&request=GetMap&layers=localhost:LC08_L1TP_233086_20131005_20170429_01_T1_sr_ndvi&bbox=126584.999972549,5732785.00003017,355814.99997254903,5963515.00003017&width=763&height=768&srs=EPSG:32719&format=image/geotiff");
+            //const img = await geoblaze.load("http://localhost:8080/geoserver/localhost/wms?service=WMS&version=1.1.0&request=GetMap&layers=localhost:Ts&bbox=64051.700592833,4191661.52438661,195811.700592833,4308241.52438661&width=768&height=679&srs=EPSG:32611&format=image/geotiff");
+            var sumaaa = geoblaze.sum(img);
+            console.log("sm original: ", sumaaa);
+            var lonlat = [223885.153852, 5786947.319458];
+            var sum = geoblaze.identify(img, lonlat);
+            console.log("sm crop: ", sum);
+            console.log("img raster: ", img);
+
+            var swissCoord = ol.proj.transform(lonlat, 'EPSG:4326', 'EPSG:32719');
+            console.log("transform: ", swissCoord)
+            swissCoord = ol.proj.transform(lonlat, 'EPSG:32719', 'EPSG:4326');
+            console.log("transform 4326: ", swissCoord)
+            swissCoord = ol.proj.transform(lonlat, 'EPSG:4326', 'EPSG:32719');
+            console.log("transform 4326 -> 32719: ", swissCoord)
+            swissCoord = ol.proj.transform(lonlat, 'EPSG:32719', 'EPSG:3857');
+            console.log("transform 3857: ", swissCoord)
+
+            var suma = geoblaze.sum(img, coord);
+            console.log("sm: ", suma);
+            Swal.fire({
+                icon: 'success',
+                title: 'Resultado',
+                text: 'El valor del indicador seleccionado contenido en el polígono es: ' + suma
+            })
+            console.log("sm: ", suma);
+
+        });
+    }
+
+</script>
+
+
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .map {
+        height: 70%;
+        width: 100%;
+    }
+</style>
+

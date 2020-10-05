@@ -11,14 +11,18 @@
         @ViewData["Title"]
     </h1>
 </section>
+
 <!-- Main content -->
-<section class="content container-fluid">
-    <div class="row">
+<div class="card shadow mb-4 text-center">
+
         <!-- left column -->
-        <div class="col-md-12">
-            <h3>¿Seguro que quiere elminar?</h3>
-            <div>
-                <dl class="dl-horizontal">
+        <div class="card-header py-3">
+            <h3 class="m-0 font-weight-bold text-primary">¿Seguro que quiere borrar al usuario?</h3>
+        </div>
+        <div class="card-body">
+
+
+                <dl>
                     <dt>
                         @Html.DisplayNameFor(model => model.FullName)
                     </dt>
@@ -39,11 +43,17 @@
                     </dd>
                 </dl>
 
-                <form method="post" action="/Admins/DeleteConfirmed">
-                    <input type="hidden" name="id" value="@Model.Id" />
-                    <input type="submit" value="Delete" class="btn btn-default" />
-                </form>
-            </div>
         </div>
-    </div>
-</section>
+        <form method="post" action="/Admins/DeleteConfirmed">
+            <div class="card-footer">
+                <input type="hidden" name="id" value="@Model.Id" />
+                    <input type="submit" value="Borrar" class="btn btn-danger" />
+                
+
+            </div>
+        </form>
+
+
+
+
+</div>

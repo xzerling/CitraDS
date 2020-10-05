@@ -7,7 +7,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+-->
 
 <script>
 
@@ -68,7 +71,7 @@
                       checkBox += '</form>';
                       $('#divEstacion').replaceWith(checkBox);
                   }
-                 
+
               }
           })
 
@@ -111,58 +114,51 @@
     </h1>
 </section>
 <!-- Main content -->
-<body class="content container-fluid">
+
+<div class="card shadow mb-4">
     <div class="row">
         <!-- left column -->
         <div class="col-md-12">
-            <!-- general form elements -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Agregar Nuevo Usuario</h3>
-                </div>
-                <!-- /.box-header -->
-                <!-- form start -->
-                <form method="post" action="/Admins/Create">
-                    <div class="box-body">
-                        <div class="form-group">
-                            <label for="inputEmail3">Nombre</label>
-                            <input type="text" class="form-control" id="FullName" name="FullName" placeholder="Nombre">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Email</label>
-                            <input type="email" class="form-control" id="Email" name="Email" placeholder="Escribir E-mail">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" id="Password" name="Password" placeholder="Escribir Password">
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="RolesId" class="control-label"></label>
-                            @Html.DropDownList("RolesId", null, htmlAttributes: new { @class = "form-control" })
-                        </div>
-
-                        <input type="hidden" name="IdEstacionesAsignadas" id="IdEstacionesAsignadas" value= getCheckbox() />
-
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label">Estaciones Disponibles para asignar</label>
-                            <div class="col-md-9 col-form-label" id="divEstacion">
-                                <input class="form-control" type="text" placeholder="No se han encontrado Estaciónes" readonly>
-                                <!--Aqui van los checkbox en funcion de la esacion seleccionada
-            Son llamados en el script-->
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- /.box-body -->
-                    <div class="box-footer">
-                        <button type="submit" onclick=getCkeckbox() class="btn btn-primary">Crear</button>
-                    </div>
-                    <!-- /.box-footer -->
-                </form>
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Agregar Nuevo Usuario</h6>
             </div>
-            <!-- /.box -->
-        </div>
-    </div>
+            <form method="post" action="/Admins/Create">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="inputEmail3">Nombre</label>
+                        <input type="text" class="form-control" id="FullName" name="FullName" placeholder="Nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Email</label>
+                        <input type="email" class="form-control" id="Email" name="Email" placeholder="Escribir E-mail">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control" id="Password" name="Password" placeholder="Escribir Password">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RolesId" class="control-label"></label>
+                        @Html.DropDownList("RolesId", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
 
-</body>
+                    <input type="hidden" name="IdEstacionesAsignadas" id="IdEstacionesAsignadas" value=getCheckbox() />
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Estaciones Disponibles para asignar</label>
+                        <div class="col-md-9 col-form-label" id="divEstacion">
+                            <input class="form-control" type="text" placeholder="No se han encontrado Estaciónes" readonly>
+                            <!--Aqui van los checkbox en funcion de la esacion seleccionada. Son llamados en el script-->
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" onclick=getCkeckbox() class="btn btn-primary">Crear</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+    </div>
 

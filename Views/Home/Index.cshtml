@@ -98,13 +98,6 @@
             </div>
 
             <div class="container">
-
-
-
-
-
-
-
                 <form class="form-inline">
                     <label>Geometry type &nbsp;</label>
                     <select id="type">
@@ -116,9 +109,8 @@
                         -->
                     </select>
                 </form>
-
-
             </div>
+
         </div>
 
     </div>
@@ -402,6 +394,11 @@
             console.log("transform 3857: ", swissCoord)
 
             var suma = geoblaze.sum(img, coord);
+            Swal.fire({
+                icon: 'success',
+                title: 'Resultado',
+                text: 'El valor del indicador seleccionado contenido en el polígono es:'+suma
+            })
             console.log("sm: ", suma);
 
         });

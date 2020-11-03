@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<CitraDataStore.Models.Agrodatos>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
     ViewBag.Title = "Agrodatos";
@@ -18,23 +20,44 @@
 
     <meta name="viewport" content="width=device-width" />
     <!-- Geoblaze -->
-
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 </header>
+
+<style>
+    .card-img-top {
+        width: 100%;
+        height: 20vw;
+        object-fit: cover;
+    }
+</style>
+
 <!-- Main content -->
 <html>
 <body>
     <h1>Descarga de datos Agroclimatologicos</h1>
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Descarga de datos Agroclimatologicos</h6>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card shadow mb-4">
+                <img class="card-img-top" src="/images/estacion5.jpg" alt="Card image cap">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Descarga de datos Agroclimatologicos</h6>
+                </div>
+                <div class="card-body">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".cd-example-modal-lg">Descargar Datos</button>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".cd-example-modal-lg">Descargar Datos</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".cd-modal-lg">Descargar Et</button>
-            <div class="row text-center" style="margin-top:100px">
-                <img class="" src="~/dist/img/logo.png" />
+        <div class="col-sm-6">
+            <div class="card shadow mb-4">
+                <img class="card-img-top" src="/images/estacion4.jpg" alt="Card image cap">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Descarga de datos Agroclimatologicos</h6>
+                </div>
+                <div class="card-body">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".cd-modal-lg">Descargar Et</button>
+                </div>
             </div>
         </div>
     </div>
@@ -61,7 +84,7 @@
 
             <div class="card shadow mb-4">
                 <div class="card-header">
-                    <strong class="panel-title">Descarga de datos Agroclimatologicos</strong>
+                    <strong class="m-0 font-weight-bold text-primary">Descarga de datos Agroclimatologicos</strong>
 
                 </div>
                 <div class="card-body">
@@ -209,12 +232,12 @@
 
 
 
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <strong class="panel-title">Descarga de Indicadores</strong>
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <strong class="m-0 font-weight-bold text-primary">Descarga de Indicadores</strong>
 
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
 
 
                     <div class="form-group row">
@@ -339,7 +362,7 @@
                 </div>
 
 
-                <div class="panel-footer">
+                <div class="card-footer">
                     <button type="submit" class="btn btn-success" id="DescargarInd" onclick="descargarIndicadores()">
                         <i class="fa fa-dot-circle-o"></i> Descargar
                     </button>
@@ -358,129 +381,174 @@
 <script type="text/javascript">
 
   // Funcion que captura los datos del formulario y envia una consulta a la BD para recuperar los datos en un archivo CSV
-  function descargarIndicadores() {
-      var estacion = document.getElementById("select11").value;
-      var datos = document.getElementById("select22").value;
-      var fechaI = document.getElementById("fecha11").value;
-      var fechaT = document.getElementById("fecha22").value;
-      //var sensores = $('#divIndicadores')[0];
-      var separadorDatos = document.getElementById("select33").value;
-      var separadorDecimales = document.getElementById("select44").value;
-      var separadorMiles = document.getElementById("select55").value;
+    function descargarIndicadores() {
 
-      var eta
-      var gd
-      var hf
-      var eto
-      if (datos == 1) { //datos instantaneos
-          var eta = document.getElementById("check33").checked;
-          $.ajax(
-        {
-          type: "POST",
-          url: "@Url.Action("EnviarConsultaIndicadores", "AgroDatos")",
-          data: {
-            estacion: estacion,
-            datos: datos,
-            fechaI: fechaI,
-            fechaT: fechaT,
-            eta:eta,
-            separadorDatos: separadorDatos,
-            separadorDecimales: separadorDecimales,
-            separadorMiles: separadorMiles,
-          },
+        var estacion = document.getElementById("select11").value;
+        var datos = document.getElementById("select22").value;
+        var fechaI = document.getElementById("fecha11").value;
+        var fechaT = document.getElementById("fecha22").value;
+        //var sensores = $('#divIndicadores')[0];
+        var separadorDatos = document.getElementById("select33").value;
+        var separadorDecimales = document.getElementById("select44").value;
+        var separadorMiles = document.getElementById("select55").value;
 
-          error: function (jqXHR, exception) {
-            var msg = '';
-            if (jqXHR.status === 0) {
-              msg = 'Not connect.\n Verify Network.';
-            } else if (jqXHR.status == 404) {
-              msg = 'Requested page not found. [404]';
-            } else if (jqXHR.status == 500) {
-              msg = 'Internal Server Error [500].';
-            } else if (exception === 'parsererror') {
-              msg = 'Requested JSON parse failed.';
-            } else if (exception === 'timeout') {
-              msg = 'Time out error.';
-            } else if (exception === 'abort') {
-              msg = 'Ajax request aborted.';
-            } else {
-              msg = 'Uncaught Error.\n' + jqXHR.responseText;
+        var eta
+        var gd
+        var hf
+        var eto
+        if (estacion <= 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'La estación no ha sido seleccionada.',
+                text: 'Debe seleccionar una estación valida.'
+            })
+        }
+        else {
+
+            if (fechaI != "" && fechaT != "") {
+
+                var fecha1 = moment(fechaI);
+                var fecha2 = moment(fechaT);
+
+                console.log("doy: ", fecha1.dayOfYear());
+
+                var diasEntreFechas = fecha2.diff(fecha1, 'days');
+                var diasDisponibles = @HttpContextAccessor.HttpContext.Session.GetInt32("dias_disponibles")
+
+                console.log("comparar fechas", fechaI > fechaT)
+                if (fechaI > fechaT) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Fechas Nulas',
+                        text: 'Fecha de termino es anterior a la de inicio.'
+                    })
+                }
+
+                if (diasDisponibles > 0 && diasEntreFechas > diasDisponibles) {
+
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Límite de días alcanzado',
+                        text: 'Su cantidad maxima es de ' + diasDisponibles + ' días y supera su petición de ' + diasEntreFechas + ' días.'
+                    })
+                }
+
+                else {
+
+                    if (datos == 1) { //datos instantaneos
+                    var eta = document.getElementById("check33").checked;
+                    $.ajax(
+                        {
+                            type: "POST",
+                            url: "@Url.Action("EnviarConsultaIndicadores", "AgroDatos")",
+                            data: {
+                                estacion: estacion,
+                                datos: datos,
+                                fechaI: fechaI,
+                                fechaT: fechaT,
+                                eta: eta,
+                                separadorDatos: separadorDatos,
+                                separadorDecimales: separadorDecimales,
+                                separadorMiles: separadorMiles,
+                            },
+
+                            error: function (jqXHR, exception) {
+                                var msg = '';
+                                if (jqXHR.status === 0) {
+                                    msg = 'Not connect.\n Verify Network.';
+                                } else if (jqXHR.status == 404) {
+                                    msg = 'Requested page not found. [404]';
+                                } else if (jqXHR.status == 500) {
+                                    msg = 'Internal Server Error [500].';
+                                } else if (exception === 'parsererror') {
+                                    msg = 'Requested JSON parse failed.';
+                                } else if (exception === 'timeout') {
+                                    msg = 'Time out error.';
+                                } else if (exception === 'abort') {
+                                    msg = 'Ajax request aborted.';
+                                } else {
+                                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                                }
+                                alert("error");
+                                console.log(msg);
+                            },
+
+                            //Crea un link para descargar el archivo CSV generado
+                            success: function (data, status) {
+                                console.log("success");
+                                var contentType = 'text/csv';
+                                var blob = new Blob([data], { type: contentType });
+                                var link = document.createElement('a');
+                                link.href = window.URL.createObjectURL(blob);
+                                link.download = "test.csv";
+                                link.textContent = "Descargar CSV";
+                                link.click();
+                                console.log("despues de la descarga");
+                            }
+                        })
+                }
+                else if (datos == 2) {
+                    var gd = document.getElementById("check00").checked;
+                    var hf = document.getElementById("check11").checked;
+                    var eto = document.getElementById("check22").checked;
+
+                    $.ajax(
+                        {
+                            type: "POST",
+                            url: "@Url.Action("EnviarConsultaIndicadores", "AgroDatos")",
+                            data: {
+                                estacion: estacion,
+                                datos: datos,
+                                fechaI: fechaI,
+                                fechaT: fechaT,
+                                gd: gd,
+                                hf: hf,
+                                eto: eto,
+                                separadorDatos: separadorDatos,
+                                separadorDecimales: separadorDecimales,
+                                separadorMiles: separadorMiles,
+                            },
+
+                            error: function (jqXHR, exception) {
+                                var msg = '';
+                                if (jqXHR.status === 0) {
+                                    msg = 'Not connect.\n Verify Network.';
+                                } else if (jqXHR.status == 404) {
+                                    msg = 'Requested page not found. [404]';
+                                } else if (jqXHR.status == 500) {
+                                    msg = 'Internal Server Error [500].';
+                                } else if (exception === 'parsererror') {
+                                    msg = 'Requested JSON parse failed.';
+                                } else if (exception === 'timeout') {
+                                    msg = 'Time out error.';
+                                } else if (exception === 'abort') {
+                                    msg = 'Ajax request aborted.';
+                                } else {
+                                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                                }
+                                alert("error");
+                                console.log(msg);
+                            },
+
+                            //Crea un link para descargar el archivo CSV generado
+                            success: function (data, status) {
+                                console.log("success");
+                                var contentType = 'text/csv';
+                                var blob = new Blob([data], { type: contentType });
+                                var link = document.createElement('a');
+                                link.href = window.URL.createObjectURL(blob);
+                                link.download = "test.csv";
+                                link.textContent = "Descargar CSV";
+                                link.click();
+                                console.log("despues de la descarga");
+                            }
+                        })
+                }
+                }
+
             }
-            alert("error");
-            console.log(msg);
-          },
 
-          //Crea un link para descargar el archivo CSV generado
-          success:function (data, status) {
-            console.log("success");
-            var contentType = 'text/csv';
-            var blob = new Blob([data], { type: contentType });
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = "test.csv";
-            link.textContent = "Descargar CSV";
-            link.click();
-            console.log("despues de la descarga");
-            }
-          })
-      }
-      else if (datos == 2) {
-          var gd = document.getElementById("check00").checked;
-          var hf = document.getElementById("check11").checked;
-          var eto = document.getElementById("check22").checked;
-
-          $.ajax(
-        {
-          type: "POST",
-          url: "@Url.Action("EnviarConsultaIndicadores", "AgroDatos")",
-          data: {
-            estacion: estacion,
-            datos: datos,
-            fechaI: fechaI,
-              fechaT: fechaT,
-              gd: gd,
-              hf: hf,
-              eto: eto,
-            separadorDatos: separadorDatos,
-            separadorDecimales: separadorDecimales,
-            separadorMiles: separadorMiles,
-          },
-
-          error: function (jqXHR, exception) {
-            var msg = '';
-            if (jqXHR.status === 0) {
-              msg = 'Not connect.\n Verify Network.';
-            } else if (jqXHR.status == 404) {
-              msg = 'Requested page not found. [404]';
-            } else if (jqXHR.status == 500) {
-              msg = 'Internal Server Error [500].';
-            } else if (exception === 'parsererror') {
-              msg = 'Requested JSON parse failed.';
-            } else if (exception === 'timeout') {
-              msg = 'Time out error.';
-            } else if (exception === 'abort') {
-              msg = 'Ajax request aborted.';
-            } else {
-              msg = 'Uncaught Error.\n' + jqXHR.responseText;
-            }
-            alert("error");
-            console.log(msg);
-          },
-
-          //Crea un link para descargar el archivo CSV generado
-          success:function (data, status) {
-            console.log("success");
-            var contentType = 'text/csv';
-            var blob = new Blob([data], { type: contentType });
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = "test.csv";
-            link.textContent = "Descargar CSV";
-            link.click();
-            console.log("despues de la descarga");
-            }
-          })
-      }
+        }
 
 
 
@@ -505,9 +573,7 @@
 
     }
 
-
     function descargarDatos() {
-
         var estacion = document.getElementById("select1").value;
         var datos = document.getElementById("select2").value;
         var fechaI = document.getElementById("fecha1").value;
@@ -519,73 +585,120 @@
         var separadorDecimales = document.getElementById("select4").value;
         var separadorMiles = document.getElementById("select5").value;
 
-        var childSize = sensores.childNodes.length;
-        console.log("chldSize: " + childSize);
-        var check = [];
-        for (var i = 0; i < childSize; i++)
-        {
-          console.log("ChildValue: " + sensores.childNodes[i].childNodes[0].value);
-          //console.log("asdf: " + sensores.childNodes[i].childNodes[0].checked);
-          if (sensores.childNodes[i].childNodes[0].checked == false) {
-            console.log("ChildValue no sel: " + sensores.childNodes[i].childNodes[0].value);
-            check.push(sensores.childNodes[i].childNodes[0].value);
-          }
 
-          console.log("tamaño arreglo: " + check.length);
+        if (estacion <= 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'La estación no ha sido seleccionada.',
+                text: 'Debe seleccionar una estación valida.'
+            })
         }
+        else {
 
-        $.ajax(
-            {
-              type: "POST",
-              url: "@Url.Action("EnviarConsulta", "AgroDatos")",
-              data: {
-                estacion: estacion,
-                datos: datos,
-                fechaI: fechaI,
-                fechaT: fechaT,
-                separadorDatos: separadorDatos,
-                separadorDecimales: separadorDecimales,
-                separadorMiles: separadorMiles,
-                check: check
+            if (fechaI != "" && fechaT != "") {
 
-              },
+                var fecha1 = moment(fechaI);
+                var fecha2 = moment(fechaT);
 
-              error: function (jqXHR, exception) {
-                var msg = '';
-                if (jqXHR.status === 0) {
-                  msg = 'Not connect.\n Verify Network.';
-                } else if (jqXHR.status == 404) {
-                  msg = 'Requested page not found. [404]';
-                } else if (jqXHR.status == 500) {
-                  msg = 'Internal Server Error [500].';
-                } else if (exception === 'parsererror') {
-                  msg = 'Requested JSON parse failed.';
-                } else if (exception === 'timeout') {
-                  msg = 'Time out error.';
-                } else if (exception === 'abort') {
-                  msg = 'Ajax request aborted.';
-                } else {
-                  msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                console.log("doy: ", fecha1.dayOfYear());
+
+                var diasEntreFechas = fecha2.diff(fecha1, 'days');
+                var diasDisponibles = @HttpContextAccessor.HttpContext.Session.GetInt32("dias_disponibles")
+
+                    console.log("comparar fechas", fechaI > fechaT)
+                if (fechaI > fechaT) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Fechas Nulas',
+                        text: 'Fecha de termino es anterior a la de inicio.'
+                    })
                 }
-                alert("error");
-                console.log(msg);
-              },
 
-              //Crea un link para descargar el archivo CSV generado
-              success:function (data, status) {
-                console.log("success");
-                var contentType = 'text/csv';
-                var blob = new Blob([data], { type: contentType });
-                var link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
-                link.download = "test.csv";
-                link.textContent = "Descargar CSV";
-                link.click();
-                console.log("despues de la descarga");
+                if (diasDisponibles > 0 && diasEntreFechas > diasDisponibles) {
+
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Límite de días alcanzado',
+                        text: 'Su cantidad maxima es de ' + diasDisponibles + ' días y supera su petición de ' + diasEntreFechas + ' días.'
+                    })
                 }
-              })
 
-  }
+                else {
+
+                    var childSize = sensores.childNodes.length;
+                    console.log("chldSize: " + childSize);
+                    var check = [];
+                    for (var i = 0; i < childSize; i++) {
+                        console.log("ChildValue: " + sensores.childNodes[i].childNodes[0].value);
+                        //console.log("asdf: " + sensores.childNodes[i].childNodes[0].checked);
+                        if (sensores.childNodes[i].childNodes[0].checked == false) {
+                            console.log("ChildValue no sel: " + sensores.childNodes[i].childNodes[0].value);
+                            check.push(sensores.childNodes[i].childNodes[0].value);
+                        }
+
+                        console.log("tamaño arreglo: " + check.length);
+                    }
+
+                    $.ajax(
+                        {
+                            type: "POST",
+                            url: "@Url.Action("EnviarConsulta", "AgroDatos")",
+                            data: {
+                                estacion: estacion,
+                                datos: datos,
+                                fechaI: fechaI,
+                                fechaT: fechaT,
+                                separadorDatos: separadorDatos,
+                                separadorDecimales: separadorDecimales,
+                                separadorMiles: separadorMiles,
+                                check: check
+
+                            },
+
+                            error: function (jqXHR, exception) {
+                                var msg = '';
+                                if (jqXHR.status === 0) {
+                                    msg = 'Not connect.\n Verify Network.';
+                                } else if (jqXHR.status == 404) {
+                                    msg = 'Requested page not found. [404]';
+                                } else if (jqXHR.status == 500) {
+                                    msg = 'Internal Server Error [500].';
+                                } else if (exception === 'parsererror') {
+                                    msg = 'Requested JSON parse failed.';
+                                } else if (exception === 'timeout') {
+                                    msg = 'Time out error.';
+                                } else if (exception === 'abort') {
+                                    msg = 'Ajax request aborted.';
+                                } else {
+                                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                                }
+                                alert("error");
+                                console.log(msg);
+                            },
+
+                            //Crea un link para descargar el archivo CSV generado
+                            success: function (data, status) {
+                                console.log("success");
+                                var contentType = 'text/csv';
+                                var blob = new Blob([data], { type: contentType });
+                                var link = document.createElement('a');
+                                link.href = window.URL.createObjectURL(blob);
+                                link.download = "test.csv";
+                                link.textContent = "Descargar CSV";
+                                link.click();
+                                console.log("despues de la descarga");
+                            }
+                        })
+                }
+
+
+
+
+
+            }
+        }
+    }
+
 </script>
 
 <script>
@@ -739,5 +852,5 @@
 
 
 </script>
- 
+
 

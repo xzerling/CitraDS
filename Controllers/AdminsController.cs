@@ -42,7 +42,7 @@ namespace CitraDataStore.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Id,FullName,Email,Password,RolesId,IdEstacionesAsignadas")] Admins admins)
+        public async Task<IActionResult> Create([Bind("Id,FullName,Email,Password,RolesId,IdEstacionesAsignadas,Dias_disponibles")] Admins admins)
         {
             if (ModelState.IsValid)
             {
@@ -77,7 +77,7 @@ namespace CitraDataStore.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Email,RolesId")] Admins admins)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Email,RolesId,IdEstacionesAsignadas,Dias_disponibles")] Admins admins)
         {
             if (id != admins.Id)
             {
@@ -88,6 +88,8 @@ namespace CitraDataStore.Controllers
             admin.FullName = admins.FullName;
             admin.Email = admins.Email;
             admin.RolesId = admins.RolesId;
+            admin.IdEstacionesAsignadas = admins.IdEstacionesAsignadas;
+            admin.Dias_disponibles = admins.Dias_disponibles;
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

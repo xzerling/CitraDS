@@ -24,6 +24,7 @@ namespace CitraDataStore.Models
         public virtual DbSet<Menus> Menus { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
 
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -65,6 +66,10 @@ namespace CitraDataStore.Models
 
                 entity.Property(e => e.RolesId)
                     .HasColumnName("roles_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Dias_disponibles)
+                    .HasColumnName("dias_disponibles")
                     .HasColumnType("int(11)");
 
                 entity.HasOne(d => d.Roles)

@@ -494,5 +494,51 @@ namespace CitraDataStore
 
         }
 
+        public Boolean Guardarpoligono(int idUsuario, string poligono, string nombre)
+        {
+            bool bandera = false;
+            using (MySqlConnection conn = GetDefaultConn())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO citra.Poligonos(idAdmin,coordenadas,nombre)VALUES(@idUsuario,@poligono,@nombre)", conn);
+                cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
+                cmd.Parameters.AddWithValue("@poligono", poligono);
+                cmd.Parameters.AddWithValue("@nombre", nombre);
+                var recs = cmd.ExecuteNonQuery();
+
+                conn.Close();
+                bandera = true;
+            }
+            return bandera;
+        }
+
+        public List<Poligonos> CargarPoligono(int idUsuario)
+        {
+            //bool bandera = false;
+            List<Poligonos> ListaPoly = new List<Poligonos>();
+            using (MySqlConnection conn = GetDefaultConn())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("SELECT idPoligonos, idAdmin, coordenadas, nombre FROM citra.Poligonos WHERE idAdmin = @idUsuario", conn);
+                cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        ListaPoly.Add(new Poligonos()
+                        {
+                            IdAdmin = reader.GetInt32("idAdmin"),
+                            Coordenadas = reader.GetString("coordenadas"),
+                            Nombre =reader.GetString("nombre")
+                        });
+                    }
+                }
+
+                conn.Close();
+                //bandera = true;
+            }
+            return ListaPoly;
+        }
+
     }
 }

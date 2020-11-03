@@ -37,6 +37,14 @@
                                 <label asp-for="RolesId" class="control-label"></label>
                                 @Html.DropDownList("RolesId", null, htmlAttributes: new { @class = "form-control" })
                             </div>
+                            <div class="form-group">
+                                <label>Estaciónes asignadas</label>
+                                <input type="text" class="form-control" id="IdEstacionesAsignadas" name="IdEstacionesAsignadas" value="@Model.IdEstacionesAsignadas" placeholder="Ingresar estaciónes a asignar">
+                            </div>
+                            <div class="form-group">
+                                <label>Dias de busqueda</label>
+                                <input type="number" class="form-control" id="Dias_disponibles" name="Dias_disponibles" value="@Model.Dias_disponibles" placeholder="Ingresar dias disponibles">
+                            </div>
                         </div>
                         <!-- /.box-body -->
                         <div class="card-footer">

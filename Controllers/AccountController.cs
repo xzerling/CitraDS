@@ -43,6 +43,7 @@ namespace CitraDataStore.Controllers
                     HttpContext.Session.SetInt32("role_id", (int)_admin.RolesId);
                     HttpContext.Session.SetString("name", _admin.FullName);
                     HttpContext.Session.SetString("id_estaciones_asignadas", _admin.IdEstacionesAsignadas);
+                    HttpContext.Session.SetInt32("dias_disponibles", _admin.Dias_disponibles);
                     int roleId = (int)HttpContext.Session.GetInt32("role_id");
                     List<Menus> menus = db.LinkRolesMenus.Where(s => s.RolesId == roleId).Select(s => s.Menus).ToList();
 

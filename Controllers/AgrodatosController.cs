@@ -146,5 +146,30 @@ namespace CitraDataStore.Controllers
             return File(System.Text.Encoding.ASCII.GetBytes(csv.ToString()), "text/csv", "data.csv");
             //return resultado;
         }
+
+
+        //Post bien hecho
+        [HttpPost]
+        public bool EnviarDatosPoligono([FromBody] Poligonos pol)
+        {
+            //Console.WriteLine(poly);
+            //Console.WriteLine(nombre);
+            //Console.WriteLine(idUsuario);
+            int aux = pol.IdAdmin;
+            //int aux2 = pol.IdPoligonos;
+            string aux3 = pol.Nombre;
+            string aux4 = pol.Coordenadas;
+            return context.Guardarpoligono(aux, aux4, aux3);
+        }
+
+        [HttpGet]
+        public JsonResult CargarDatosPoligono()
+        {
+            int id = HttpContext.Session.GetInt32("id").GetValueOrDefault();
+            return Json(context.CargarPoligono(id));
+        }
+
+
+
     }
 }

@@ -16,6 +16,7 @@ namespace CitraDataStore.Models
         public string Password { get; set; }
         public int? RolesId { get; set; }
         public string IdEstacionesAsignadas { get; set; }
+        public int Dias_disponibles { get; set; }
 
         public virtual Roles Roles { get; set; }
         public virtual ICollection<EstacionesAsignadas> EstacionesAsignadas { get; set; }

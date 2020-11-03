@@ -20,6 +20,7 @@
     "chart.js": "^2.9.3",
     "chartjs-plugin-zoom": "^0.7.7",
     "geoblaze": "^0.2.5",
+    "ml-savitzky-golay-generalized": "^2.0.2",
     "proj4": "^2.6.2",
     "sweetalert2": "^10.3.1"
   }

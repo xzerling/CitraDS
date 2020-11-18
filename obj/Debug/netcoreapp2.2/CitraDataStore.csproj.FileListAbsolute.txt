@@ -97,7 +97,6 @@ C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\bin\Debug\netcorea
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\bin\Debug\netcoreapp2.2\appsettings.json
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\bin\Debug\netcoreapp2.2\package-lock.json
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\bin\Debug\netcoreapp2.2\package.json
-C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\bin\Debug\netcoreapp2.2\CitraDataStore.deps.json
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\bin\Debug\netcoreapp2.2\CitraDataStore.runtimeconfig.json
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\bin\Debug\netcoreapp2.2\CitraDataStore.runtimeconfig.dev.json
@@ -191,3 +190,4 @@ C:\Users\pfuen\Documents\GitKrakenRepo\CitraDS\obj\Debug\netcoreapp2.2\CitraData
 C:\Users\pfuen\Documents\GitKrakenRepo\CitraDS\obj\Debug\netcoreapp2.2\CitraDataStore.csproj.CopyComplete
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\obj\Debug\netcoreapp2.2\Razor\Views\Agrodatos\Datos.cshtml.g.cs
 C:\Users\pfuen\Documents\GitKrakenRepo\CitraDS\obj\Debug\netcoreapp2.2\Razor\Views\Agrodatos\Datos.cshtml.g.cs
+C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\obj\Debug\netcoreapp2.2\Razor\Views\EstacionesAsignadas\Edit.cshtml.g.cs

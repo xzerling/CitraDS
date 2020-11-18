@@ -11,5 +11,6 @@ namespace CitraDataStore.Models
 
         public virtual Menus Menus { get; set; }
         public virtual Roles Roles { get; set; }
+
     }
 }

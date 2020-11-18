@@ -11,5 +11,6 @@ namespace CitraDataStore.Models
         public string fecha { get; set; }
         public string hora { get; set; }
         public string datos { get; set; }
+
     }
 }

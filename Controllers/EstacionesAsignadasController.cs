@@ -53,13 +53,13 @@ namespace CitraDataStore.Controllers
                 return NotFound();
             }
 
-            var admins = await _context.Admins.SingleOrDefaultAsync(m => m.Id == id);
-            if (admins == null)
+            var estacioneve = await _context.Estacioneve.SingleOrDefaultAsync(m => m.Id == id);
+            if (estacioneve == null)
             {
                 return NotFound();
             }
-            ViewData["RolesId"] = new SelectList(_context.Roles, "Id", "Title", admins.RolesId);
-            return View(admins);
+            //ViewData["RolesId"] = new SelectList(_context.Roles, "Id", "Title", admins.RolesId);
+            return View(estacioneve);
         }
 
         // POST: Admins/Edit/5

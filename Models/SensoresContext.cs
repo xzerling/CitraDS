@@ -17,15 +17,12 @@ namespace CitraDataStore
 
         }
 
-        public SensoresContext(DbContextOptions<SensoresContext> options)
-            : base(options)
-        {
-        }
-
         private MySqlConnection GetDefaultConn()
         {
-            return new MySqlConnection("Server=citrads.cmmqgr4kvqxz.us-east-2.rds.amazonaws.com;Database=citra;User=admin;Password=c1tr420cds");
+            //return new MySqlConnection("Server=citrads.cmmqgr4kvqxz.us-east-2.rds.amazonaws.com;Database=citra;User=admin;Password=c1tr420cds");
             //return new MySqlConnection("Server=localhost;Database=wwbiov_citrads;User=wwbiov_admin;Password=c1tr4084!" + '"' + "#");
+            return new MySqlConnection("Server=localhost;Database=citrads;User=root");
+
         }
 
 
@@ -500,7 +497,7 @@ namespace CitraDataStore
             using (MySqlConnection conn = GetDefaultConn())
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO citra.Poligonos(idAdmin,coordenadas,nombre)VALUES(@idUsuario,@poligono,@nombre)", conn);
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO Poligonos(idAdmin,coordenadas,nombre)VALUES(@idUsuario,@poligono,@nombre)", conn);
                 cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
                 cmd.Parameters.AddWithValue("@poligono", poligono);
                 cmd.Parameters.AddWithValue("@nombre", nombre);
@@ -519,7 +516,7 @@ namespace CitraDataStore
             using (MySqlConnection conn = GetDefaultConn())
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT idPoligonos, idAdmin, coordenadas, nombre FROM citra.Poligonos WHERE idAdmin = @idUsuario", conn);
+                MySqlCommand cmd = new MySqlCommand("SELECT idPoligonos, idAdmin, coordenadas, nombre FROM Poligonos WHERE idAdmin = @idUsuario", conn);
                 cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {

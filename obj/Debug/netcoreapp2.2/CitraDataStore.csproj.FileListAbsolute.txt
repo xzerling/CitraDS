@@ -191,3 +191,4 @@ C:\Users\pfuen\Documents\GitKrakenRepo\CitraDS\obj\Debug\netcoreapp2.2\CitraData
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\obj\Debug\netcoreapp2.2\Razor\Views\Agrodatos\Datos.cshtml.g.cs
 C:\Users\pfuen\Documents\GitKrakenRepo\CitraDS\obj\Debug\netcoreapp2.2\Razor\Views\Agrodatos\Datos.cshtml.g.cs
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\obj\Debug\netcoreapp2.2\Razor\Views\EstacionesAsignadas\Edit.cshtml.g.cs
+C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\obj\Debug\netcoreapp2.2\Razor\Views\EstacionesAsignadas\Create.cshtml.g.cs

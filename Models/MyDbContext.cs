@@ -142,7 +142,6 @@ namespace CitraDataStore.Models
                     .HasDefaultValueSql("'0'");
 
                 entity.Property(e => e.Estado)
-                    .IsRequired()
                     .HasColumnName("estado")
                     .HasColumnType("tinytext");
 
@@ -168,23 +167,6 @@ namespace CitraDataStore.Models
                     .HasColumnName("RTU")
                     .HasColumnType("int(11)")
                     .HasDefaultValueSql("'0'");
-
-                entity.Property(e => e.UltimaFecha)
-                    .HasColumnName("ultima_fecha")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.UltimaFechaClon)
-                    .HasColumnName("ultima_fecha_clon")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.UltimaHora)
-                    .HasColumnName("ultima_hora")
-                    .HasColumnType("time");
-
-                entity.Property(e => e.UltimaHoraClon)
-                    .HasColumnName("ultima_hora_clon")
-                    .HasColumnType("time");
-
             });
 
             modelBuilder.Entity<Instrumento>(entity =>

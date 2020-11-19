@@ -1,0 +1,55 @@
+﻿@model CitraDataStore.Models.Estacioneve
+
+@{
+    ViewData["Title"] = "Creación de una estación";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @ViewData["Title"]
+    </h1>
+</section>
+<!-- Main content -->
+
+        <!-- left column -->
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h4 class="m-0 font-weight-bold text-primary">Crear un nuevo rol</h4>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form method="post" asp-action="/EstacionesAsignadas/Create">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Id</label>
+                            <input disabled type="text" class="form-control" id="Id" name="Id"  placeholder="Ingresar Id">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Adcon Id</label>
+                            <input type="text" class="form-control" id="AdconId" name="AdconId" placeholder="Ingresar Id de Adcon">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Nombre de estación</label>
+                            <input type="text" class="form-control" id="Nombre" name="Nombre" placeholder="Ingresar nombre de la estación">
+                        </div>
+                        <div class="form-group">
+                            <label>Latitud</label>
+                            <input type="text" class="form-control" id="Latitud" name="Latitud" placeholder="Ingresar latitud">
+                        </div>
+                        <div class="form-group">
+                            <label>Longitud</label>
+                            <input type="text" class="form-control" id="Longitud" name="Longitud" placeholder="Ingresar longitud">
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.box -->
+        </div>

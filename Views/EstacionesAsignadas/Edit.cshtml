@@ -25,20 +25,24 @@
                 <form method="post" asp-action="/EstacionesAsignadas/Edit">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Nombre completo</label>
-                            <input type="text" class="form-control" id="Id" name="Id" value="@Model.Id" placeholder="Ingresar nombre completo">
+                            <label for="exampleInputEmail1">Id</label>
+                            <input disabled type="text" class="form-control" id="Id" name="Id" value="@Model.Id" placeholder="Ingresar Id">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Email</label>
-                            <input type="email" class="form-control" id="Nombre" name="Nombre" value="@Model.Nombre" placeholder="Ingresar Email">
+                            <label for="exampleInputEmail1">Adcon Id</label>
+                            <input type="text" class="form-control" id="AdconId" name="AdconId" value="@Model.AdconId" placeholder="Ingresar Id de Adcon">
                         </div>
                         <div class="form-group">
-                            <label>Estaciónes asignadas</label>
-                            <input type="text" class="form-control" id="Latitud" name="Latitud" value="@Model.Latitud" placeholder="Ingresar estaciónes a asignar">
+                            <label for="exampleInputPassword1">Nombre de estación</label>
+                            <input type="text" class="form-control" id="Nombre" name="Nombre" value="@Model.Nombre" placeholder="Ingresar nombre de la estación">
                         </div>
                         <div class="form-group">
-                            <label>Dias de busqueda</label>
-                            <input type="number" class="form-control" id="Longitud" name="Longitud" value="@Model.Longitud" placeholder="Ingresar dias disponibles">
+                            <label>Latitud</label>
+                            <input type="text" class="form-control" id="Latitud" name="Latitud" value="@Model.Latitud" placeholder="Ingresar latitud">
+                        </div>
+                        <div class="form-group">
+                            <label>Longitud</label>
+                            <input type="text" class="form-control" id="Longitud" name="Longitud" value="@Model.Longitud" placeholder="Ingresar longitud">
                         </div>
                     </div>
                     <!-- /.box-body -->

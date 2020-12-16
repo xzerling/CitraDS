@@ -61,20 +61,6 @@
                                     @admins.Roles.Title
                                 </td>
 
-                                <!-- Asignar Estacion
-                                <td>
-                                    <select id="@admins.Id" name="@admins.Id" class="form-control">
-                                        <option>Selecionar una estación</option>
-                                        @foreach (Estacioneve agrodatos in Model.Agrodatos)
-                                        {
-                                            <option value=@agrodatos.Id> @agrodatos.Nombre</option>
-
-                                        }
-                                    </select>
-                                    <button type="submit" class="btn btn-success" id="Asignar" onclick="obtenerDatos(@admins.Id)">Asignar</button>
-                                </td>
-
-                                 -->
                                 <td>
                                     <a href="/Admins/Edit/@admins.Id" class="btn btn-outline-warning">Editar</a> |
                                     <a href="/Admins/Delete/@admins.Id" class="btn btn-outline-danger">Borrar</a>

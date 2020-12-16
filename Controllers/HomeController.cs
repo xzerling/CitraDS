@@ -19,7 +19,13 @@ namespace CitraDataStore.Controllers
                 return Redirect("/Account/Login");
             }
 
-            return View();
+            DashboardViewModel dashboard = new DashboardViewModel();
+
+            dashboard.admins_count = db.Admins.Count();
+            dashboard.estaciones_count = db.Estacioneve.Count();
+            dashboard.Indicadores_count = 3;
+            dashboard.Mediciones_count = db.Medicion.Count();
+            return View(dashboard);
         }
 
         public IActionResult Privacy()

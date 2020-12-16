@@ -83,11 +83,10 @@ namespace CitraDataStore.Controllers
                     if (url != "#")
                     {
                         string line = String.Format(@"
-                                <li class=""nav-item"">
-                                    <a class=""nav-link""href=""{0}"">
+                                    <a class=""collapse-item""href=""{0}"">
                                         <i class=""{2}""></i> 
                                             <span>{1}</span>
-                                    </a></li>", url, menuText, icon);
+                                    </a>", url, menuText, icon);
                         sb.Append(line);
                     }
 
@@ -100,17 +99,16 @@ namespace CitraDataStore.Controllers
                         string preline = "";
                         string line = String.Format(@"
                                 <li class=""nav-item"">
-                                    <a class=""nav-link collapsed"" data-target=""{1}"" href=""#"">
+                                    <a class=""nav-link collapsed"" data-toggle=""collapse"" data-target=""#menu{2}"" href=""#"" aria-expanded=""true"" aria-controls=""menu{2}"">
                                         <i class=""{0}""></i> 
                                         <span>{1}</span>
                                     </a>
-                                    <div id=""collapseTwo"" class=""collapse"" aria-labelledby=""headingTwo"" data-parent=""#accordionSidebar"">
-                                    <div class=""bg - white py - 2 collapse - inner rounded"">
-                                    ", icon, menuText);
+                                    <div id=""menu{2}"" class=""collapse"" aria-labelledby=""headingTwo"" data-parent=""#accordionSidebar"">
+                                    <div class=""bg-white py-2 collapse-inner rounded"">", icon, menuText, pid);
                         var subMenuBuilder = new StringBuilder();
                         sb.AppendLine(line);
                         sb.Append(GenerateUL(subMenu, table, subMenuBuilder));
-                        sb.Append("</li>");
+                        sb.Append("</div></div></li>");
                     }
                 }
             }

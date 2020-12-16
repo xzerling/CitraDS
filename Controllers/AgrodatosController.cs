@@ -16,7 +16,7 @@ namespace CitraDataStore.Controllers
         readonly SensoresContext context = new SensoresContext();
 
 
-        [AuthorizedAction]
+        
         public IActionResult Index()
         {
 
@@ -24,7 +24,7 @@ namespace CitraDataStore.Controllers
             return View(lista);
         }
 
-
+        [AuthorizedAction]
         public IActionResult Datos()
         {
             int id = HttpContext.Session.GetInt32("id").GetValueOrDefault();

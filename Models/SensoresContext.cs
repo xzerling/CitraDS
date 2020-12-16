@@ -19,9 +19,9 @@ namespace CitraDataStore
 
         private MySqlConnection GetDefaultConn()
         {
-            //return new MySqlConnection("Server=citrads.cmmqgr4kvqxz.us-east-2.rds.amazonaws.com;Database=citra;User=admin;Password=c1tr420cds");
+            return new MySqlConnection("Server=citrads.cmmqgr4kvqxz.us-east-2.rds.amazonaws.com;Database=citra;User=admin;Password=c1tr420cds");
             //return new MySqlConnection("Server=localhost;Database=wwbiov_citrads;User=wwbiov_admin;Password=c1tr4084!" + '"' + "#");
-            return new MySqlConnection("Server=localhost;Database=citrads;User=root");
+            //return new MySqlConnection("Server=127.0.0.1;Database=citrads;User=root");
 
         }
 

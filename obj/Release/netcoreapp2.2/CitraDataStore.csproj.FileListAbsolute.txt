@@ -92,7 +92,6 @@ C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git\CitraDS\obj\Release\netcore
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git\CitraDS\obj\Release\netcoreapp2.2\CitraDataStore.csproj.CopyComplete
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\bin\Release\netcoreapp2.2\appsettings.Development.json
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\bin\Release\netcoreapp2.2\appsettings.json
-C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\bin\Release\netcoreapp2.2\Properties\launchSettings.json
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\bin\Release\netcoreapp2.2\package-lock.json
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\bin\Release\netcoreapp2.2\package.json
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\bin\Release\netcoreapp2.2\CitraDataStore.deps.json
@@ -188,3 +187,5 @@ C:\Users\pfuen\Documents\GitKrakenRepo\CitraDS\obj\Release\netcoreapp2.2\CitraDa
 C:\Users\pfuen\Documents\GitKrakenRepo\CitraDS\obj\Release\netcoreapp2.2\CitraDataStore.genruntimeconfig.cache
 C:\Users\pfuen\Documents\GitKrakenRepo\CitraDS\obj\Release\netcoreapp2.2\CitraDataStore.csproj.CopyComplete
 C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\obj\Release\netcoreapp2.2\Razor\Views\Agrodatos\Datos.cshtml.g.cs
+C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\obj\Release\netcoreapp2.2\Razor\Views\EstacionesAsignadas\Create.cshtml.g.cs
+C:\Users\Zerling\Documents\UTAL\2020-1\Citra\New\Git2\CitraDS\obj\Release\netcoreapp2.2\Razor\Views\EstacionesAsignadas\Edit.cshtml.g.cs

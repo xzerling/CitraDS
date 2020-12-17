@@ -46,7 +46,7 @@ namespace CitraDataStore
             services.AddSession(options =>
             {
                 options.Cookie.Name = ".AdventureWorks.Session";
-                options.IdleTimeout = TimeSpan.FromSeconds(240);
+                options.IdleTimeout = TimeSpan.FromSeconds(600);
                 options.Cookie.IsEssential = true;
             }
             );
